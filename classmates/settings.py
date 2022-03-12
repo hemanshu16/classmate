@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ClassMate',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'anish@8368',
         'HOST': 'localhost'
     }
 }
@@ -136,5 +136,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'fhemanshu@gmail.com'
-EMAIL_HOST_PASSWORD = 'who@123#'
+EMAIL_HOST_USER = 'girianish2711@gmail.com'
+EMAIL_HOST_PASSWORD = 'Anish11@@@'
