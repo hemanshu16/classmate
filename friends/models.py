@@ -21,4 +21,4 @@ class Profile(models.Model):
             models.CharField(max_length=100, blank=True),
             size=20,null=True,
         )
-    image = models.ImageField(upload_to='pics',null=True)
+    image = models.ImageField(upload_to='pics', null=True)
