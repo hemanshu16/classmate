@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     path('index', views.index, name='index'),
-    #path('index-register', views.index_register, name='index_register'),
+    # path('index-register', views.index_register, name='index_register'),
     path('edit-profile-basic', views.edit_profile_basic, name='edit_profile_basic'),
     path('edit-profile-interests', views.edit_profile_interests, name='edit_profile_interests'),
     path('edit-profile-password', views.edit_profile_password, name='edit_profile_password'),
@@ -21,4 +21,5 @@ urlpatterns = [
     path('newsfeed-messages',views.newsfeed_messages, name='newsfeed_messages'),
     path('newsfeed-people-nearby',views.newsfeed_people_nearby, name='newsfeed_people_nearby'),
     path('newsfeed-videos', views.newsfeed_videos, name='newsfeed_videos')
+
 ]

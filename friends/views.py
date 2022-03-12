@@ -5,7 +5,7 @@ from django.shortcuts import render
 def index(request) :
     return render(request,'index.html')
 
-#def index_register(request):
+# def index_register(request):
 #    return render(request, 'index-register.html')
 
 def edit_profile_basic(request):

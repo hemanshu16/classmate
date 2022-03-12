@@ -526,26 +526,41 @@
                 
                 <!--Login-->
                 <div class="tab-pane" id="login">
-                  <h3>Login</h3>
-                  <p class="text-muted">Log into your account</p>
+                  <h3 id="Login_Form">Login</h3>
+                  
                   
                   <!--Login Form-->
-                  <form name="Login_form" id='Login_form'>
-                     <div class="row">
-                      <div class="form-group col-xs-12">
-                        <label for="my-username" class="sr-only">Username</label>
-                        <input id="my-username" class="form-control input-group-lg" type="text" name="my-username" title="Enter Username" placeholder="Your Username"/>
-                      </div>
-                    </div>
+                  <form name="Login_form" id='Login_form' action="login" method="POST">{%csrf_token%}
+                    <p class="text-muted" id="#Login_Title1">Log into your account</p>
                     <div class="row">
                       <div class="form-group col-xs-12">
-                        <label for="my-password" class="sr-only">Password</label>
-                        <input id="my-password" class="form-control input-group-lg" type="password" name="my-password" title="Enter Password" placeholder="Password"/>
+                          <label for="my-email" class="sr-only">Email</label>
+                          <input id="my-email" class="form-control input-group-lg" type="text" name="my-username" title="Enter Email" placeholder="Your Email"/>
                       </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-xs-12">
+                      <label for="my-password" class="sr-only">Password</label>
+                      <input id="my-password" class="form-control input-group-lg" type="password" name="my-password" title="Enter password" placeholder="Password"/>
                     </div>
+                  </div>
+                  <p><a onclick="hideChildren();">Forgot Password?</a></p>
+                  <button type="submit" class="btn btn-primary" id="Login_Button">Login Now</button>
                   </form><!--Login Form Ends--> 
-                  <p><a href="#">Forgot Password?</a></p>
-                  <button class="btn btn-primary">Login Now</button>
+          <!--Forget Password Form-->
+                    <div id="forget_password">
+                    <form name="Login_form" id='Login_form1' method="POST" action="forgotpassword" >{%csrf_token%}
+                      <p class="text-muted" id="#Login_Title1">Enter Registered Email Address</p>
+                        <div class="row">
+                        <div class="form-group col-xs-12">
+                          <label for="my-email_forget" class="sr-only">Email</label>
+                          <input id="my-email_forget" class="form-control input-group-lg" type="text" name="email" title="Enter Email" placeholder="Your Registered Email" style="border-radius: 30px;"/>
+                        </div>
+                        </div>
+                    <p><a onclick="login();">Login</a></p>
+                    <button type="submit" class="btn btn-primary" id="Login_Button1">Send Link</button>
+                  </form><!--Forget Password Form Ends--> </div>
+                 
                 </div>
               </div>
             </div>
@@ -577,12 +592,29 @@
 
     <!-- Scripts
     ================================================= -->
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message }}");</script>
+    {% endfor %}
+    {% endif %}
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.appear.min.js' %}"></script>
 		<script src="{% static 'js/jquery.incremental-counter.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-    
+    <script type="text/javascript">
+      $("#forget_password").children().hide();
+      function hideChildren() {
+         $("#forget_password").children().show(); 
+         $("#Login_form").children().hide();
+         $("#Login_Form").text("Forget Password");
+      }
+      function login() {
+         $("#forget_password").children().hide(); 
+         $("#Login_form").children().show();
+         $("#Login_Form").text("Login");
+      }
+   </script>
 	</body>
 
 <!-- Mirrored from themified.com/friend-finder/index-register    by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Feb 2022 12:32:49 GMT -->
