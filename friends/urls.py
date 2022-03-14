@@ -6,10 +6,10 @@ from . import views
 urlpatterns = [
     path('index', views.index, name='index'),
     # path('index-register', views.index_register, name='index_register'),
-    path('edit-profile-basic', views.edit_profile_basic, name='edit_profile_basic'),
-    path('edit-profile-interests', views.edit_profile_interests, name='edit_profile_interests'),
+    path('edit-profile-basic/<str:username>', views.edit_profile_basic, name='edit_profile_basic'),
+    path('edit-profile-interests/<str:username>', views.edit_profile_interests, name='edit_profile_interests'),
     path('edit-profile-password', views.edit_profile_password, name='edit_profile_password'),
-    path('edit-profile-work-edu', views.edit_profile_work_edu, name='edit_profile_work_edu'),
+    path('edit-profile-work-edu/<str:username>', views.edit_profile_work_edu, name='edit_profile_work_edu'),
     path('edit-profile-settings', views.edit_profile_settings, name='edit_profile_settings'),
     path('contact', views.contact, name='contact'),
     path('404', views.not_found, name='not_found'),

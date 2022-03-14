@@ -2,7 +2,7 @@ from asyncio.windows_events import NULL
 import uuid
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User, auth
 from friends.models import Profile
@@ -54,8 +54,11 @@ def login(request) :
     username = request.POST['my-username']
     password = request.POST['my-password']
     user = authenticate(request, username=username, password=password)
+    print(user)
     # https://docs.djangoproject.com/en/1.11/topics/auth/default/#django.contrib.auth.authenticate
     if user is not None :
+        print(user)
+        request.session.set_expiry(86400) #sets the exp. value of the session 
         return HttpResponseRedirect('/')
     messages.info(request, "User name Or Password is not Matched")
     return HttpResponseRedirect('index-register')

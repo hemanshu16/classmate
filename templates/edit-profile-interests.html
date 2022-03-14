@@ -1,4 +1,5 @@
 {% load static %}
+{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -125,9 +126,9 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-info">
-                  <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-                  <h3>Sarah Cruiz</h3>
-                  <p class="text-muted">Creative Director</p>
+                  <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" class="img-responsive profile-photo" />
+                  <h3>{{user}}</h3>
+                  <p class="text-muted">{{profile.universityName}}</p>
                 </div>
               </div>
               <div class="col-md-9">
@@ -139,7 +140,9 @@
                 </ul>
                 <ul class="follow-me list-inline">
                   <li>1,299 people following her</li>
+                  {% if flag == 0 %}
                   <li><button class="btn-primary">Add Friend</button></li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
@@ -148,9 +151,9 @@
           <!--Timeline Menu for Small Screens-->
           <div class="navbar-mobile hidden-lg hidden-md">
             <div class="profile-info">
-              <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-              <h4>Sarah Cruiz</h4>
-              <p class="text-muted">Creative Director</p>
+              <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" class="img-responsive profile-photo" />
+              <h4>{{user}}</h4>
+              <p class="text-muted">{{profile.universityName}}</p>
             </div>
             <div class="mobile-menu">
               <ul class="list-inline">
@@ -159,7 +162,9 @@
                 <li><a href="timeline-album   ">Album</a></li>
                 <li><a href="timeline-friends   ">Friends</a></li>
               </ul>
-              <button class="btn-primary">Add Friend</button>
+              {% if flag == 0 %}
+              <li><button class="btn-primary">Add Friend</button></li>
+              {% endif %}
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -170,9 +175,9 @@
               
               <!--Edit Profile Menu-->
               <ul class="edit-menu">
-              	<li><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic   ">Basic Information</a></li>
-              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu   ">Education and Work</a></li>
-              	<li class="active"><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests   ">My Interests</a></li>
+              	<li><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic/{{user}}">Basic Information</a></li>
+              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu /{{user}}  ">Education and Work</a></li>
+              	<li class="active"><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests/{{user}}   ">My Interests</a></li>
                 <li><i class="icon ion-ios-settings"></i><a href="edit-profile-settings   ">Account Settings</a></li>
               	<li><i class="icon ion-ios-locked-outline"></i><a href="edit-profile-password   ">Change Password</a></li>
               </ul>
@@ -185,18 +190,17 @@
                 <div class="block-title">
                   <h4 class="grey"><i class="icon ion-ios-heart-outline"></i>My Interests</h4>
                   <div class="line"></div>
-                  <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                  <p></p>
                   <div class="line"></div>
                 </div>
                 <div class="edit-block">
                   <ul class="list-inline interests">
-                  	<li><a href="#"><i class="icon ion-android-bicycle"></i> Bycicle</a></li>
-                  	<li><a href="#"><i class="icon ion-ios-camera"></i> Photgraphy</a></li>
-                  	<li><a href="#"><i class="icon ion-android-cart"></i> Shopping</a></li>
-                  	<li><a href="#"><i class="icon ion-android-plane"></i> Traveling</a></li>
-                  	<li><a href="#"><i class="icon ion-android-restaurant"></i> Eating</a></li>
+                    {% for interest in profile.interestList %}
+                  	<li>{{interest}}</li>
+                    {% endfor %}
                   </ul>
                   <div class="line"></div>
+                  {% if flag == 1 %}
                   <div class="row">
                     <p class="custom-label"><strong>Add interests</strong></p>
                     <div class="form-group col-sm-8">
@@ -206,6 +210,7 @@
                       <button class="btn btn-primary">Add</button>
                     </div>
                   </div>
+                  {% endif %}
                 </div>
               </div>
             </div>

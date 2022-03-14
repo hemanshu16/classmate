@@ -1,4 +1,5 @@
 {% load static %}
+{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -125,9 +126,9 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-info">
-                  <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-                  <h3>Sarah Cruiz</h3>
-                  <p class="text-muted">Creative Director</p>
+                  <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" class="img-responsive profile-photo" />
+                  <h3>{{user}}</h3>
+                  <p class="text-muted">{{profile.universityName}}</p>
                 </div>
               </div>
               <div class="col-md-9">
@@ -139,7 +140,9 @@
                 </ul>
                 <ul class="follow-me list-inline">
                   <li>1,299 people following her</li>
+                  {% if flag == 0 %}
                   <li><button class="btn-primary">Add Friend</button></li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
@@ -148,9 +151,9 @@
           <!--Timeline Menu for Small Screens-->
           <div class="navbar-mobile hidden-lg hidden-md">
             <div class="profile-info">
-              <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-              <h4>Sarah Cruiz</h4>
-              <p class="text-muted">Creative Director</p>
+              <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" class="img-responsive profile-photo" />
+              <h4>{{user}}</h4>
+              <p class="text-muted">{{profile.universityName}}</p>
             </div>
             <div class="mobile-menu">
               <ul class="list-inline">
@@ -159,7 +162,9 @@
                 <li><a href="timeline-album   ">Album</a></li>
                 <li><a href="timeline-friends   ">Friends</a></li>
               </ul>
-              <button class="btn-primary">Add Friend</button>
+              {% if flag == 0 %}
+              <li><button class="btn-primary">Add Friend</button></li>
+              {% endif %}
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -170,9 +175,9 @@
               
               <!--Edit Profile Menu-->
               <ul class="edit-menu">
-              	<li class="active"><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic   ">Basic Information</a></li>
-              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu   ">Education and Work</a></li>
-              	<li><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests   ">My Interests</a></li>
+              	<li class="active"><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic/{{user}}   ">Basic Information</a></li>
+              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu/{{user}}   ">Education and Work</a></li>
+              	<li><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests/{{user}}   ">My Interests</a></li>
                 <li><i class="icon ion-ios-settings"></i><a href="edit-profile-settings   ">Account Settings</a></li>
               	<li><i class="icon ion-ios-locked-outline"></i><a href="edit-profile-password   ">Change Password</a></li>
               </ul>
@@ -185,25 +190,25 @@
                 <div class="block-title">
                   <h4 class="grey"><i class="icon ion-android-checkmark-circle"></i>Edit basic information</h4>
                   <div class="line"></div>
-                  <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                  <p></p>
                   <div class="line"></div>
                 </div>
                 <div class="edit-block">
                   <form name="basic-info" id="basic-info" class="form-inline">
                     <div class="row">
                       <div class="form-group col-xs-6">
-                        <label for="firstname">First name</label>
-                        <input id="firstname" class="form-control input-group-lg" type="text" name="firstname" title="Enter first name" placeholder="First name"  />
+                        <label for="firstname">First Name</label>
+                        <input id="firstname" class="form-control input-group-lg" type="text" name="firstname" title="Enter first name" value="{{user.first_name}}" placeholder="First Name"  />
                       </div>
                       <div class="form-group col-xs-6">
-                        <label for="lastname" class="">Last name</label>
-                        <input id="lastname" class="form-control input-group-lg" type="text" name="lastname" title="Enter last name" placeholder="Last name" />
+                        <label for="lastname" class="">Last Name</label>
+                        <input id="lastname" class="form-control input-group-lg" type="text" name="lastname" title="Enter last name" value="{{user.last_name}}" placeholder="Last Name" />
                       </div>
                     </div>
                     <div class="row">
                       <div class="form-group col-xs-12">
                         <label for="email">My email</label>
-                        <input id="email" class="form-control input-group-lg" type="text" name="Email" title="Enter Email" placeholder="My Email"  />
+                        <input id="email" class="form-control input-group-lg" type="text" name="Email" title="Enter Email" value="{{user.email}}" placeholder="Enter Email"  />
                       </div>
                     </div>
                     <div class="row">
@@ -211,7 +216,7 @@
                       <div class="form-group col-sm-3 col-xs-6">
                         <label for="month" class="sr-only"></label>
                         <select class="form-control" id="day">
-                          <option value="Day">Day</option>
+                          <option value="{{profile.dateOfBirth.day}}">{{profile.dateOfBirth.day}}</option>
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -248,7 +253,7 @@
                       <div class="form-group col-sm-3 col-xs-6">
                         <label for="month" class="sr-only"></label>
                         <select class="form-control" id="month">
-                          <option value="month">Month</option>
+                          <option value="{{profile.dateOfBirth.month}}">{{profile.dateOfBirth.month}}</option>
                           <option>01</option>
                           <option>02</option>
                           <option>03</option>
@@ -266,8 +271,8 @@
                       <div class="form-group col-sm-6 col-xs-12">
                         <label for="year" class="sr-only"></label>
                         <select class="form-control" id="year">
-                          <option value="year">Year</option>
-                          <option selected>2000</option>
+                          <option value="{{profile.dateOfBirth.year}}">{{profile.dateOfBirth.year}}</option>
+                          <option >2000</option>
                           <option>2001</option>
                           <option>2002</option>
                           <option>2004</option>
@@ -285,21 +290,21 @@
                     <div class="form-group gender">
                       <span class="custom-label"><strong>I am a: </strong></span>
                       <label class="radio-inline">
-                        <input type="radio" name="optradio" >Male
+                        <input type="radio" name="optradio" {% if profile.gender == "male" %}checked{% endif %}>Male
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="optradio">Female
+                        <input type="radio" name="optradio" {% if profile.gender == "female" %}checked{% endif %}>Female
                       </label>
                     </div>
                     <div class="row">
                       <div class="form-group col-xs-6">
                         <label for="city"> My city</label>
-                        <input id="city" class="form-control input-group-lg" type="text" name="city" title="Enter city" placeholder="Your city" value="New York"/>
+                        <input id="city" class="form-control input-group-lg" type="text" name="city" title="Enter city" placeholder="Your city" value="{{profile.city}}"/>
                       </div>
                       <div class="form-group col-xs-6">
                         <label for="country">My country</label>
                         <select class="form-control" id="country">
-                          <option value="country">Country</option>
+                          <option value="{{profile.country}}">{{profile.country}}</option>
                           <option value="AFG">Afghanistan</option>
                           <option value="ALA">Ƭand Islands</option>
                           <option value="ALB">Albania</option>
@@ -535,7 +540,7 @@
                           <option value="UKR">Ukraine</option>
                           <option value="ARE">United Arab Emirates</option>
                           <option value="GBR">United Kingdom</option>
-                          <option value="USA" selected>United States</option>
+                          <option value="USA">United States</option>
                           <option value="UMI">United States Minor Outlying Islands</option>
                           <option value="URY">Uruguay</option>
                           <option value="UZB">Uzbekistan</option>
@@ -555,10 +560,12 @@
                     <div class="row">
                       <div class="form-group col-xs-12">
                         <label for="my-info">About me</label>
-                        <textarea id="my-info" name="information" class="form-control" placeholder="Some texts about me" rows="4" cols="400"></textarea>
+                        <textarea id="my-info" name="information" class="form-control" value="{{profile.aboutMe}}" placeholder="Some texts about me" rows="4" cols="400"></textarea>
                       </div>
                     </div>
+                    {% if flag == 1 %}
                     <button class="btn btn-primary">Save Changes</button>
+                    {% endif %}
                   </form>
                 </div>
               </div>
