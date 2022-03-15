@@ -22,3 +22,4 @@ class Profile(models.Model):
             size=20,null=True,
         )
     image = models.ImageField(upload_to='pics', null=True)
+    banner_image = models.ImageField(upload_to='pics', null=True)

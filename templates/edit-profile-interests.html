@@ -140,9 +140,9 @@
                 </ul>
                 <ul class="follow-me list-inline">
                   <li>1,299 people following her</li>
-                  {% if flag == 0 %}
+                  
                   <li><button class="btn-primary">Add Friend</button></li>
-                  {% endif %}
+                  
                 </ul>
               </div>
             </div>
@@ -162,9 +162,9 @@
                 <li><a href="timeline-album   ">Album</a></li>
                 <li><a href="timeline-friends   ">Friends</a></li>
               </ul>
-              {% if flag == 0 %}
-              <li><button class="btn-primary">Add Friend</button></li>
-              {% endif %}
+              
+              
+         
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -175,11 +175,11 @@
               
               <!--Edit Profile Menu-->
               <ul class="edit-menu">
-              	<li><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic/{{user}}">Basic Information</a></li>
-              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu /{{user}}  ">Education and Work</a></li>
-              	<li class="active"><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests/{{user}}   ">My Interests</a></li>
-                <li><i class="icon ion-ios-settings"></i><a href="edit-profile-settings   ">Account Settings</a></li>
-              	<li><i class="icon ion-ios-locked-outline"></i><a href="edit-profile-password   ">Change Password</a></li>
+              	<li><i class="icon ion-ios-information-outline"></i><a href="/edit-profile-basic">Basic Information</a></li>
+              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="/edit-profile-work-edu">Education and Work</a></li>
+              	<li class="active"><i class="icon ion-ios-heart-outline"></i><a href="/edit-profile-interests">My Interests</a></li>
+                
+              	<li><i class="icon ion-ios-locked-outline"></i><a href="/edit-profile-password">Change Password</a></li>
               </ul>
             </div>
             <div class="col-md-7">
@@ -187,10 +187,12 @@
               <!-- Edit Interests
               ================================================= -->
               <div class="edit-profile-container">
+                 <form action="/update-interest" method="POST">{%csrf_token%}
                 <div class="block-title">
                   <h4 class="grey"><i class="icon ion-ios-heart-outline"></i>My Interests</h4>
                   <div class="line"></div>
-                  <p></p>
+                   <textarea id="my-info" name="interestdesc" class="form-control" 
+                        rows="4" cols="400">{{ profile.interestDesc }}</textarea> 
                   <div class="line"></div>
                 </div>
                 <div class="edit-block">
@@ -200,18 +202,21 @@
                     {% endfor %}
                   </ul>
                   <div class="line"></div>
-                  {% if flag == 1 %}
+             
                   <div class="row">
                     <p class="custom-label"><strong>Add interests</strong></p>
+                   
                     <div class="form-group col-sm-8">
                       <input id="add-interest" class="form-control input-group-lg" type="text" name="interest" title="Choose Interest" placeholder="Interests. For example, photography"/>
                     </div>
                     <div class="form-group col-sm-4">
-                      <button class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn btn-primary">Add</button>
                     </div>
+                   
                   </div>
-                  {% endif %}
+           
                 </div>
+                 </form>
               </div>
             </div>
             <div class="col-md-2 static">
@@ -325,6 +330,11 @@
 -->
     <!-- Scripts
     ================================================= -->
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message }}");</script>
+    {% endfor %}
+    {% endif %}
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.sticky-kit.min.js' %}"></script>

@@ -1,8 +1,11 @@
+from typing import List
 from django.shortcuts import render
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
 from friends.models import Profile
-
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+import datetime
 # Create your views here.
 
 def index(request) :
@@ -11,36 +14,117 @@ def index(request) :
 # def index_register(request):
 #    return render(request, 'index-register.html')
 
-def edit_profile_basic(request,username):
-    flag = 0
-    print(request.session["username"])
-    if request.session["username"] == username:
-        flag = 1
 
-    user = User.objects.get(username=username)
-    profile = Profile.objects.get(user_id=user.id)
-    return render(request, 'edit-profile-basic.html', {'flag':flag,'user':user,'profile':profile})
+def edit_profile_basic(request):
+    print("hello")
+    if 'username' in request.session :
+        username = request.session["username"]
+        if(request.method == "POST") :
+            firstname = request.POST["firstname"]
+            lastname = request.POST["lastname"]
+            email = request.POST['email']
+            day = request.POST["date"]
+            month = request.POST["month"]
+            year = request.POST["year"]
+            gender = request.POST["gender"]
+            city = request.POST["city"]
+            country = request.POST["country"]
+            information = request.POST["information"]
+            user = User.objects.get(username = username)
+            profile = Profile.objects.get(user_id=user.id)
+            profile.user.firstname = firstname
+            profile.user.lastname = lastname
+            if(user.email != email and User.objects.filter(email = email).exists()):
+                messages.info(request, str(email) + 'This email is alread exists')
+            else : 
+                profile.user.email = email
+            profile.dateOfBirth = datetime.datetime(int(year), int(month), int(day))
+            profile.city = city
+            profile.country = country
+            profile.aboutMe = information
+            profile.gender = gender
+            profile.image = request.FILES['profileimg']
+            profile.save()
+        user1 = User.objects.get(username=request.session["username"])
+        profile1 = Profile.objects.get(user_id=user1.id)
+        return render(request, "edit-profile-basic.html",{'user':user1,'profile':profile1})
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
-def edit_profile_interests(request,username):
-    flag = 0
-    if request.user == username:
-        flag = 1
+def edit_profile_interests(request):
+    
+    if 'username' in request.session :
+        user = User.objects.get(username=request.session["username"])
+        profile = Profile.objects.get(user_id=user.id)
+        return render(request, 'edit-profile-interests.html', {'user':user,'profile':profile})
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
+    
 
-    user = User.objects.get(username=username)
-    profile = Profile.objects.get(user_id=user.id)
-    return render(request, 'edit-profile-interests.html', {'flag':flag,'user':user,'profile':profile})
+def update_interest(request) :
+    if 'username' in request.session :
+        username = request.session["username"]
+        user = User.objects.get(username = username)
+        profile = Profile.objects.get(user_id = user.id)
+        profile.interestDesc = request.POST["interestdesc"]
+        interest = request.POST['interest'].strip()
+        if profile.interestList is not None :
+            if len(interest) > 0 :
+                profile.interestList.append(request.POST['interest'])
+        elif  len(interest) > 0 : 
+           List1 = [request.POST['interest']]
+           profile.interestList = List1
+        profile.save()
+        
+        return HttpResponseRedirect('/edit-profile-interests')
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
-def edit_profile_work_edu(request,username):
-    flag = 0
-    if request.user == username:
-        flag = 1
+def edit_profile_work_edu(request):
 
-    user = User.objects.get(username=username)
-    profile = Profile.objects.get(user_id=user.id)
-    return render(request, 'edit-profile-work-edu.html', {'flag':flag,'user':user,'profile':profile})
+    if 'username' in request.session :
+        user = User.objects.get(username=request.session["username"])
+        profile = Profile.objects.get(user_id=user.id)
+        return render(request, 'edit-profile-work-edu.html', {'user':user,'profile':profile})
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
+def update_education_details(request) :
+    user  = User.objects.get(username = request.session["username"])
+    profile = Profile.objects.get(user_id = user.id)
+    profile.universityName = request.POST["school"]
+    profile.startYear = int(request.POST["start"])
+    profile.endYear = int(request.POST["end"])
+    profile.educationDesc = request.POST["description"]
+    profile.save()
+    return HttpResponseRedirect('/edit-profile-work-edu')
+
+  
 def edit_profile_password(request):
-    return render(request, 'edit-profile-password.html')
+    if 'username' in request.session :
+        username = request.session["username"]
+        if request.method == "POST" :
+            user = User.objects.get(username = request.session["username"])
+            if(user.check_password(request.POST["oldpassword"])) :
+                if ( request.POST["newpassword"] == request.POST["newcpassword"]) :
+                    user.set_password(request.POST["newpassword"])
+                    messages.info(request, 'Your Password is reset to New Password')
+                    user.save()
+                else : 
+                    messages.info(request, 'Password and Confirm Password must be same')
+            else :
+                messages.info(request, 'Old password is Wrong')
+        
+        user1 = User.objects.get(username=request.session["username"])
+        profile1 = Profile.objects.get(user_id=user1.id)
+        return render(request,'edit-profile-password.html', {'user':user1,'profile':profile1})
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
 def edit_profile_settings(request):
     return render(request, 'edit-profile-settings.html')

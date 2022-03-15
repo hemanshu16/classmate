@@ -140,9 +140,9 @@
                 </ul>
                 <ul class="follow-me list-inline">
                   <li>1,299 people following her</li>
-                  {% if flag == 0 %}
-                  <li><button class="btn-primary">Add Friend</button></li>
-                  {% endif %}
+                  
+                 
+                 
                 </ul>
               </div>
             </div>
@@ -162,9 +162,9 @@
                 <li><a href="timeline-album   ">Album</a></li>
                 <li><a href="timeline-friends   ">Friends</a></li>
               </ul>
-              {% if flag == 0 %}
+              
               <li><button class="btn-primary">Add Friend</button></li>
-              {% endif %}
+             
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -175,11 +175,11 @@
               
               <!--Edit Profile Menu-->
               <ul class="edit-menu">
-              	<li><i class="icon ion-ios-information-outline"></i><a href="edit-profile-basic/{{user}}   ">Basic Information</a></li>
-              	<li class="active"><i class="icon ion-ios-briefcase-outline"></i><a href="edit-profile-work-edu/{{user}}  ">Education and Work</a></li>
-              	<li><i class="icon ion-ios-heart-outline"></i><a href="edit-profile-interests/{{user}}   ">My Interests</a></li>
-                <li><i class="icon ion-ios-settings"></i><a href="edit-profile-settings   ">Account Settings</a></li>
-              	<li><i class="icon ion-ios-locked-outline"></i><a href="edit-profile-password   ">Change Password</a></li>
+              	<li><i class="icon ion-ios-information-outline"></i><a href="/edit-profile-basic  ">Basic Information</a></li>
+              	<li class="active"><i class="icon ion-ios-briefcase-outline"></i><a href="/edit-profile-work-edu  ">Education and Work</a></li>
+              	<li><i class="icon ion-ios-heart-outline"></i><a href="/edit-profile-interests   ">My Interests</a></li>
+               
+              	<li><i class="icon ion-ios-locked-outline"></i><a href="/edit-profile-password   ">Change Password</a></li>
               </ul>
             </div>
             <div class="col-md-7">
@@ -194,7 +194,8 @@
                   <div class="line"></div>
                 </div>
                 <div class="edit-block">
-                  <form name="education" id="education" class="form-inline">
+                  <form name="education" id="education" class="form-inline" action="/update-education-details" method="POST">
+                    {%csrf_token%}
                     <div class="row">
                       <div class="form-group col-xs-12">
                         <label for="school">My university</label>
@@ -204,11 +205,11 @@
                     <div class="row">
                       <div class="form-group col-xs-6">
                         <label for="date-from">From</label>
-                        <input id="date-from" class="form-control input-group-lg" type="text" name="date" title="Enter a Date" placeholder="from" value="{{profile.startYear}}" />
+                        <input id="date-from" class="form-control input-group-lg" type="text" name="start" title="Enter a Date" placeholder="from" value="{{profile.startYear}}" />
                       </div>
                       <div class="form-group col-xs-6">
                         <label for="date-to" class="">To</label>
-                        <input id="date-to" class="form-control input-group-lg" type="text" name="date" title="Enter a Date" placeholder="to" value="{{profile.endYear}}" />
+                        <input id="date-to" class="form-control input-group-lg" type="text" name="end" title="Enter a Date" placeholder="to" value="{{profile.endYear}}" />
                       </div>
                     </div>
                     <div class="row">
@@ -217,9 +218,9 @@
                         <textarea id="edu-description" name="description" class="form-control" placeholder="Some texts about my education" rows="4" cols="400">{{profile.educationDesc}}</textarea>
                       </div>
                     </div>
-                    {% if flag == 1 %}
-                    <button class="btn btn-primary">Save Changes</button>
-                    {% endif %}
+               
+                    <button class="btn btn-primary" type="submit">Save Changes</button>
+              
                     
                   </form>
                 </div>

@@ -58,7 +58,7 @@ def login(request) :
     # https://docs.djangoproject.com/en/1.11/topics/auth/default/#django.contrib.auth.authenticate
     if user is not None :
         print(user)
-        request.session.set_expiry(86400) #sets the exp. value of the session 
+        request.session["username"] = username #sets the exp. value of the session 
         return HttpResponseRedirect('/')
     messages.info(request, "User name Or Password is not Matched")
     return HttpResponseRedirect('index-register')

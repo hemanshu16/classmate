@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ClassMate',
         'USER': 'postgres',
-        'PASSWORD': 'anish@8368',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost'
     }
 }
@@ -125,7 +125,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
-
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
 STATIC_ROOT = os.path.join(BASE_DIR,'assests')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -138,3 +138,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'girianish2711@gmail.com'
 EMAIL_HOST_PASSWORD = 'Anish11@@@'
+
+
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
