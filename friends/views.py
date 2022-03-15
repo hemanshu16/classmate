@@ -2,6 +2,7 @@ from typing import List
 from django.shortcuts import render
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
+import friends
 from friends.models import Profile
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -143,7 +144,49 @@ def newsfeed(request) :
     return render(request,'newsfeed.html')
 
 def newsfeed_friends(request) :
-    return render(request,'newsfeed-friends.html')
+    if 'username' in request.session :
+        user = User.objects.get(username = request.session["username"])
+        profile = Profile.objects.get(user_id = user.id)
+        friendlist = []
+        friends = profile.friendlist 
+        if friends is not None :
+            for friend in friends :
+                if friend is not None :
+                    user = User.objects.get(username = friend)
+                    profile = Profile.objects.get(user_id = user.id)
+                    friendlist.append(profile)
+        otheruser = Profile.objects.all()
+        return render(request,'newsfeed-friends.html', {'profile': friendlist, 'users':otheruser })
+    messages.info(request, 'First you need to loging for view my-profile')
+    return HttpResponseRedirect('/index-register' )    
+
+def timeline_about(request,username = None) :
+    
+    if username is  None :
+        if 'username' in request.session : 
+            username = request.session['username']
+        else :
+            messages.info(request, 'First you need to loging for view my-profile')
+            return HttpResponseRedirect('/index-register' )
+    if(User.objects.filter(username = username).exists()):
+       user = User.objects.get(username = username)
+       profile = Profile.objects.get(user_id = user.id)
+       return render(request, "timeline-about.html", {'profile' : profile})
+    return render(request,"404.html")
+
+def timeline(request,username = None) :
+    
+    if username is  None :
+        if 'username' in request.session : 
+            username = request.session['username']
+        else :
+            messages.info(request, 'First you need to loging for view my-profile')
+            return HttpResponseRedirect('/index-register' )
+    if(User.objects.filter(username = username).exists()):
+       user = User.objects.get(username = username)
+       profile = Profile.objects.get(user_id = user.id)
+       return render(request, "timeline.html", {'profile' : profile})
+    return render(request,"404.html")
 
 def newsfeed_images(request) :
     return render(request,'newsfeed-images.html')
@@ -156,3 +199,18 @@ def newsfeed_people_nearby(request) :
 
 def newsfeed_videos(request) :
     return render(request,'newsfeed-videos.html')
+
+def add_friend(request,friend) :
+    if "username" in request.session :
+        user = User.objects.get(username = request.session["username"])
+        profile = Profile.objects.get(user_id= user.id)
+        if profile.friendlist is not None :
+            profile.friendlist.append(friend)
+        else : 
+           print(friend)
+           List1 = [friend]
+           profile.friendlist = List1
+        profile.save()
+        return HttpResponseRedirect('/newsfeed-friends' )
+    messages.info(request, 'First you need to loging for view my-profile')
+    return HttpResponseRedirect('/index-register' )

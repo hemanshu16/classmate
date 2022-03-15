@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
+import friends
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dateOfBirth = models.DateField(null=True)
@@ -18,6 +20,10 @@ class Profile(models.Model):
     educationDesc = models.TextField(null=True)
     interestDesc = models.TextField(null=True)
     interestList = ArrayField(
+            models.CharField(max_length=100, blank=True),
+            size=20,null=True,
+        )
+    friendlist = ArrayField(
             models.CharField(max_length=100, blank=True),
             size=20,null=True,
         )

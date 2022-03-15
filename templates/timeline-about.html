@@ -1,3 +1,5 @@
+{% load static %}
+{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -12,16 +14,15 @@
 
     <!-- Stylesheets
     ================================================= -->
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/ionicons.min.css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
     
-    <!--Google Font-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
     
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/fav.png' %}"/>
 	</head>
   <body>
 
@@ -39,63 +40,63 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index-register   "><img src="images/logo.png" alt="logo" /></a>
+            <a class="navbar-brand" href="/index-register   "><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right main-menu">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span><img src="images/down-arrow.png" alt="" /></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="index   ">Landing Page 1</a></li>
-                    <li><a href="index-register   ">Landing Page 2</a></li>
+                    <li><a href="/index">Landing Page 1</a></li>
+                    <li><a href="/index-register">Landing Page 2</a></li>
                   </ul>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Newsfeed <span><img src="images/down-arrow.png" alt="" /></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Newsfeed <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="newsfeed   ">Newsfeed</a></li>
-                    <li><a href="newsfeed-people-nearby   ">Poeple Nearly</a></li>
-                    <li><a href="newsfeed-friends   ">My friends</a></li>
-                    <li><a href="newsfeed-messages   ">Chatroom</a></li>
-                    <li><a href="newsfeed-images   ">Images</a></li>
-                    <li><a href="newsfeed-videos   ">Videos</a></li>
+                    <li><a href="/newsfeed">Newsfeed</a></li>
+                    <li><a href="/newsfeed-people-nearby">Poeple Nearly</a></li>
+                    <li><a href="/newsfeed-friends">My friends</a></li>
+                    <li><a href="/newsfeed-messages">Chatroom</a></li>
+                    <li><a href="/newsfeed-images">Images</a></li>
+                    <li><a href="/newsfeed-videos">Videos</a></li>
                   </ul>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span><img src="images/down-arrow.png" alt="" /></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu login">
-                  <li><a href="timeline   ">Timeline</a></li>
-                  <li><a href="timeline-about   ">Timeline About</a></li>
-                  <li><a href="timeline-album   ">Timeline Album</a></li>
-                  <li><a href="timeline-friends   ">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic   ">Edit: Basic Info</a></li>
-                  <li><a href="edit-profile-work-edu   ">Edit: Work</a></li>
-                  <li><a href="edit-profile-interests   ">Edit: Interests</a></li>
-                  <li><a href="edit-profile-settings   ">Account Settings</a></li>
-                  <li><a href="edit-profile-password   ">Change Password</a></li>
+                  <li><a href="/timeline">Timeline</a></li>
+                  <li><a href="/timeline-about">Timeline About</a></li>
+                  <li><a href="/timeline-album">Timeline Album</a></li>
+                  <li><a href="/timeline-friends">Timeline Friends</a></li>
+                  <li><a href="/edit-profile-basic">Edit: Basic Info</a></li>
+                  <li><a href="/edit-profile-work-edu">Edit: Work</a></li>
+                  <li><a href="/edit-profile-interests">Edit: Interests</a></li>
+                  <li><a href="/edit-profile-settings">Account Settings</a></li>
+                  <li><a href="/edit-profile-password">Change Password</a></li>
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle pages" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Pages <span><img src="images/down-arrow.png" alt="" /></span></a>
+                <a href="#" class="dropdown-toggle pages" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Pages <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu page-list">
-                  <li><a href="index   ">Landing Page 1</a></li>
-                  <li><a href="index-register   ">Landing Page 2</a></li>
-                  <li><a href="newsfeed   ">Newsfeed</a></li>
-                  <li><a href="newsfeed-people-nearby   ">Poeple Nearly</a></li>
-                  <li><a href="newsfeed-friends   ">My friends</a></li>
-                  <li><a href="newsfeed-messages   ">Chatroom</a></li>
-                  <li><a href="newsfeed-images   ">Images</a></li>
-                  <li><a href="newsfeed-videos   ">Videos</a></li>
-                  <li><a href="timeline   ">Timeline</a></li>
-                  <li><a href="timeline-about   ">Timeline About</a></li>
-                  <li><a href="timeline-album   ">Timeline Album</a></li>
-                  <li><a href="timeline-friends   ">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic   ">Edit Profile</a></li>
-                  <li><a href="contact   ">Contact Us</a></li>
-                  <li><a href="faq   ">FAQ Page</a></li>
-                  <li><a href="404   ">404 Not Found</a></li>
+                  <li><a href="/index">Landing Page 1</a></li>
+                  <li><a href="/index-register">Landing Page 2</a></li>
+                  <li><a href="/newsfeed">Newsfeed</a></li>
+                  <li><a href="/newsfeed-people-nearby">Poeple Nearly</a></li>
+                  <li><a href="/newsfeed-friends">My friends</a></li>
+                  <li><a href="/newsfeed-messages">Chatroom</a></li>
+                  <li><a href="/newsfeed-images">Images</a></li>
+                  <li><a href="/newsfeed-videos">Videos</a></li>
+                  <li><a href="/timeline">Timeline</a></li>
+                  <li><a href="/timeline-about">Timeline About</a></li>
+                  <li><a href="/timeline-album">Timeline Album</a></li>
+                  <li><a href="/timeline-friends">Timeline Friends</a></li>
+                  <li><a href="/edit-profile-basic">Edit Profile</a></li>
+                  <li><a href="/contact">Contact Us</a></li>
+                  <li><a href="/faq">FAQ Page</a></li>
+                  <li><a href="/404">404 Not Found</a></li>
                 </ul>
               </li>
               <li class="dropdown"><a href="contact   ">Contact</a></li>
@@ -124,17 +125,17 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-info">
-                  <img src="images/users/user-1.jpg" alt="" class="img-responsive profile-photo" />
-                  <h3>Sarah Cruiz</h3>
-                  <p class="text-muted">Creative Director</p>
+                  <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="img-responsive profile-photo" />
+                  <h4>{{profile.user.username}}</h4>
+                  <p class="text-muted">{{profile.universityName}}</p>
                 </div>
               </div>
               <div class="col-md-9">
                 <ul class="list-inline profile-menu">
-                  <li><a href="timeline   ">Timeline</a></li>
-                  <li><a href="timeline-about   " class="active">About</a></li>
-                  <li><a href="timeline-album   ">Album</a></li>
-                  <li><a href="timeline-friends   ">Friends</a></li>
+                  <li><a href="/timeline   ">Timeline</a></li>
+                  <li><a href="/timeline-about   " class="active">About</a></li>
+                  <li><a href="/timeline-album   ">Album</a></li>
+                  <li><a href="/timeline-friends   ">Friends</a></li>
                 </ul>
                 <ul class="follow-me list-inline">
                   <li>1,299 people following her</li>
@@ -147,16 +148,16 @@
           <!--Timeline Menu for Small Screens-->
           <div class="navbar-mobile hidden-lg hidden-md">
             <div class="profile-info">
-              <img src="images/users/user-1.jpg" alt="" class="img-responsive profile-photo" />
-              <h4>Sarah Cruiz</h4>
-              <p class="text-muted">Creative Director</p>
+              <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
+              <h4>{{profile.user.username}}</h4>
+              <p class="text-muted">{{profile.universityName}}</p>
             </div>
             <div class="mobile-menu">
               <ul class="list-inline">
-                <li><a href="timline   ">Timeline</a></li>
-                <li><a href="timeline-about   " class="active">About</a></li>
-                <li><a href="timeline-album   ">Album</a></li>
-                <li><a href="timeline-friends   ">Friends</a></li>
+                <li><a href="/timline   ">Timeline</a></li>
+                <li><a href="/timeline-about   " class="active">About</a></li>
+                <li><a href="/timeline-album   ">Album</a></li>
+                <li><a href="/timeline-friends   ">Friends</a></li>
               </ul>
               <button class="btn-primary">Add Friend</button>
             </div>
@@ -173,47 +174,28 @@
               <div class="about-profile">
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-information-outline icon-in-title"></i>Personal Information</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur</p>
+                  <p>{{profile.aboutMe}}</p>
                 </div>
-                <div class="about-content-block">
-                  <h4 class="grey"><i class="ion-ios-briefcase-outline icon-in-title"></i>Work Experiences</h4>
-                  <div class="organization">
-                    <img src="images/envato.png" alt="" class="pull-left img-org" />
-                    <div class="work-info">
-                      <h5>Envato</h5>
-                      <p>Seller - <span class="text-grey">1 February 2013 to present</span></p>
-                    </div>
-                  </div>
-                  <div class="organization">
-                    <img src="images/envato.png" alt="" class="pull-left img-org" />
-                    <div class="work-info">
-                      <h5>Envato</h5>
-                      <p>Seller - <span class="text-grey">1 February 2013 to present</span></p>
-                    </div>
-                  </div>
-                  <div class="organization">
-                    <img src="images/envato.png" alt="" class="pull-left img-org" />
-                    <div class="work-info">
-                      <h5>Envato</h5>
-                      <p>Seller - <span class="text-grey">1 February 2013 to present</span></p>
-                    </div>
-                  </div>
-                </div>
+               
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-location-outline icon-in-title"></i>Location</h4>
-                  <p>228 Park Eve, New York</p>
+                  <p>{{profile.city}},{{profile.country}}</p>
                   <div class="google-maps">
                     <div id="map" class="map"></div>
                   </div>
                 </div>
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-heart-outline icon-in-title"></i>Interests</h4>
-                  <ul class="interests list-inline">
-                    <li><span class="int-icons" title="Bycycle riding"><i class="icon ion-android-bicycle"></i></span></li>
-                    <li><span class="int-icons" title="Photography"><i class="icon ion-ios-camera"></i></span></li>
-                    <li><span class="int-icons" title="Shopping"><i class="icon ion-android-cart"></i></span></li>
-                    <li><span class="int-icons" title="Traveling"><i class="icon ion-android-plane"></i></span></li>
-                    <li><span class="int-icons" title="Eating"><i class="icon ion-android-restaurant"></i></span></li>
+                  <ul class="list-inline interests">
+                    {% for interest in profile.interestList %}
+                  	<li style="background: #8dc63f;
+                    color: #fff;
+                    padding: 5px 15px;
+                    margin-right: 10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    border-radius: 40px;">{{interest}}</li>
+                    {% endfor %}
                   </ul>
                 </div>
                 <div class="about-content-block">
@@ -267,7 +249,7 @@
       	<div class="row">
           <div class="footer-wrapper">
             <div class="col-md-3 col-sm-3">
-              <a href="#"><img src="images/logo-black.png" alt="" class="footer-logo" /></a>
+              <a href="#"><img src="{% static 'images/logo-black.png' %}" alt="" class="footer-logo" /></a>
               <ul class="list-inline social-icons">
               	<li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
               	<li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
@@ -329,17 +311,16 @@
       <div class="spinner"></div>
     </div>
     
-    <!--Buy button-->
-    <a href="https://themeforest.net/cart/add_items?item_ids=18711273&amp;ref=thunder-team" target="_blank" class="btn btn-buy"><span class="italy">Buy with:</span><img src="images/envato_logo.png" alt="" /><span class="price">Only $20!</span></a>
-
+   
+   
     <!-- Scripts
     ================================================= -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&amp;callback=initMap"></script>
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.sticky-kit.min.js"></script>
-    <script src="js/jquery.scrollbar.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky-kit.min.js' %}"></script>
+    <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     
   </body>
 

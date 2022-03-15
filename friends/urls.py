@@ -21,5 +21,10 @@ urlpatterns = [
     path('newsfeed-people-nearby',views.newsfeed_people_nearby, name='newsfeed_people_nearby'),
     path('newsfeed-videos', views.newsfeed_videos, name='newsfeed_videos'),
     path('update-interest', views.update_interest, name="update_intereset"),
-    path('update-education-details', views.update_education_details, name="update_edutcation_details")
+    path('update-education-details', views.update_education_details, name="update_edutcation_details"),
+    path('timeline-about/',views.timeline_about,name="timeline_about"),
+    path('timeline-about/<str:username>',views.timeline_about,name="timeline_about"),
+    path('add-friend/<str:friend>',views.add_friend, name="add_friend"),
+    path('timeline/',views.timeline,name="timeline"),
+    path('timeline/<str:username>',views.timeline,name="timeline")
 ]
