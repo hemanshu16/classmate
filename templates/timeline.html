@@ -120,52 +120,63 @@
       <!-- Timeline
       ================================================= -->
       <div class="timeline">
-        <div class="timeline-cover">
-
-          <!--Timeline Menu for Large Screens-->
-          <div class="timeline-nav-bar hidden-sm hidden-xs">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="profile-info">
-                  <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-                  <h3>Sarah Cruiz</h3>
-                  <p class="text-muted">Creative Director</p>
-                </div>
-              </div>
-              <div class="col-md-9">
-                <ul class="list-inline profile-menu">
-                  <li><a href="/timeline" class="active">Timeline</a></li>
-                  <li><a href="/timeline-about">About</a></li>
-                  <li><a href="/timeline-album">Album</a></li>
-                  <li><a href="/timeline-friends">Friends</a></li>
-                </ul>
-                <ul class="follow-me list-inline">
-                  <li>1,299 people following her</li>
-                  <li><button class="btn-primary">Add Friend</button></li>
-                </ul>
-              </div>
-            </div>
-          </div><!--Timeline Menu for Large Screens End-->
-
-          <!--Timeline Menu for Small Screens-->
-          <div class="navbar-mobile hidden-lg hidden-md">
-            <div class="profile-info">
-              <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="img-responsive profile-photo" />
-              <h4>Sarah Cruiz</h4>
-              <p class="text-muted">Creative Director</p>
-            </div>
-            <div class="mobile-menu">
-              <ul class="list-inline">
-                <li><a href="/timline" class="active">Timeline</a></li>
-                <li><a href="/timeline-about">About</a></li>
-                <li><a href="/timeline-album">Album</a></li>
-                <li><a href="/timeline-friends">Friends</a></li>
-              </ul>
-              <button class="btn-primary">Add Friend</button>
-            </div>
-          </div><!--Timeline Menu for Small Screens End-->
-
-        </div>
+        <div class="timeline-cover" style="background:url({% if profile.image %} {{profile.image.url}} {% endif %}) ;"  for="banner" >
+  
+          <input type="file" name="banner-image"  style="visibility:hidden; display: none;"> 
+         
+           <div class="timeline-nav-bar hidden-sm hidden-xs">
+             <div class="row">
+               <div class="col-md-3">
+                 <div class="profile-info">
+                   <label for="image" >
+                   <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" title="click for change image"
+                     class="img-responsive profile-photo" /></label>
+                     <input type="file" id="image" name = "profileimg"  style="visibility:hidden; display: none;">
+                   <h3>{{profile.user.username}}</h3>
+                   <p class="text-muted">{{profile.universityName}}</p>
+                 </div>
+               </div>
+               <div class="col-md-9">
+                 <ul class="list-inline profile-menu">
+                   <li><a href="timeline   ">Timeline</a></li>
+                   <li><a href="timeline-about   " class="active">About</a></li>
+                   <li><a href="timeline-album   ">Album</a></li>
+                   <li><a href="timeline-friends   ">Friends</a></li>
+                 </ul>
+                 <ul class="follow-me list-inline">
+                   <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>
+                   
+                   
+                 
+                 </ul>
+               </div>
+             </div>
+           </div>
+           <!--Timeline Menu for Large Screens End-->
+   
+           <!--Timeline Menu for Small Screens-->
+           <div class="navbar-mobile hidden-lg hidden-md">
+             <div class="profile-info">
+               <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{profile.user.username}}"
+                 class="img-responsive profile-photo" />
+               <h4>{{profile.user.username}}</h4>
+               <p class="text-muted">{{profile.universityName}}</p>
+             </div>
+             <div class="mobile-menu">
+               <ul class="list-inline">
+                 <li><a href="/timline   ">Timeline</a></li>
+                 <li><a href="/timeline-about   " class="active">About</a></li>
+                 <li><a href="/timeline-album   ">Album</a></li>
+                 <li><a href="/timeline-friends   ">Friends</a></li>
+               </ul>
+               
+               <li><button class="btn-primary">Add Friend</button></li>
+               
+             </div>
+           </div>
+           <!--Timeline Menu for Small Screens End-->
+   
+         </div> 
         <div id="page-contents">
           <div class="row">
             <div class="col-md-3"></div>
@@ -177,7 +188,7 @@
                 <div class="row">
                   <div class="col-md-7 col-sm-7">
                     <div class="form-group">
-                      <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-md" />
+                      <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-md" />
                       <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
                     </div>
                   </div>
@@ -197,131 +208,80 @@
 
               <!-- Post Content
               ================================================= -->
+              {% for post in posts%}
               <div class="post-content">
 
                 <!--Post Date-->
                 <div class="post-date hidden-xs hidden-sm">
-                  <h5>Sarah</h5>
-                  <p class="text-grey">Sometimes ago</p>
+                  <h5>{{post.username}}</h5>
+                  <p class="text-grey">{{post.postdate}}</p>
                 </div><!--Post Date End-->
 
-                <img src="{%static 'images/post-images/12.jpg' %}" alt="post-image" class="img-responsive post-image" />
+                <img src="{{post.image.url}}" alt="post-image" class="img-responsive post-image" />
                 <div class="post-container">
-                  <img src="{%static 'images/users/user-1.jpg' %}" alt="user" class="profile-photo-md pull-left" />
+                  <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="user" class="profile-photo-md pull-left" />
                   <div class="post-detail">
                     <div class="user-info">
-                      <h5><a href="/timeline" class="profile-link">Sarah Cruiz</a> <span class="following">following</span></h5>
-                      <p class="text-muted">Published a photo about 15 mins ago</p>
+                      <h5><a href="/timeline-about/{{profile.user.username}}" class="profile-link">{{post.username}}</a> <span class="following">following</span></h5>
+                      <p class="text-muted">Published a photo on {{post.postdate}}</p>
                     </div>
+
                     <div class="reaction">
-                      <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                      <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+
+                      <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                        <input type="hidden" name="postid" value="{{post.pk}}"/>
+                        <label for="submitlike{{post.pk}}" >
+                          <a class="btn text-green"><i class="icon ion-thumbsup" style="font-size:xx-large;"></i> {{post.likes}}</a>
+                          </label>
+                        <input type="submit" id="submitlike{{post.pk}}" name = "submitlike"  style="visibility:hidden; display:none;" >
+                      </form>
+
+                      <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                        <input type="hidden" name="postid" value="{{post.pk}}"/>
+                        <label for="submitdislike{{post.pk}}" >
+                          <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:xx-large;"></i> {{post.dislikes}}</a>
+                        </label>
+                        <input type="submit" id="submitdislike{{post.pk}}" name = "submitdislike"  style="visibility:hidden; display:none;" >
+                      </form>
+                      
                     </div>
+
                     <div class="line-divider"></div>
                     <div class="post-text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                      <p>{{post.desc}} </p>
                     </div>
+
                     <div class="line-divider"></div>
+                    {% for comment in comments %}
+                    {% if comment.post_id == post.pk %}
                     <div class="post-comment">
                       <img src="{%static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="timeline" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                      <p><a href="timeline" class="profile-link">{{comment.username}}</a> {{comment.comment}} </p>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+
+                    <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
                     <div class="post-comment">
-                      <img src="{%static 'images/users/user-4.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="/timeline" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                      <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-sm" />
+                      <input type="hidden" name="postid" value="{{post.pk}}"/>
+                      <textarea name="comment" cols="30" rows="1" placeholder="Post a comment"></textarea>&nbsp;&nbsp;
+                      <button id="submitcomment{{post.pk}}" name="submitcomment" class="btn btn-primary pull-right" style="height : 35px;">Comment</button>
                     </div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm" />
-                      <input type="text" class="form-control" placeholder="Post a comment">
-                    </div>
+                  </form>
+
+                    <!-- <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                      <input type="hidden" name="postid" value="{{post.pk}}"/>
+                      <label for="submitcomment{{post.pk}}" >
+                        <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:xx-large;"></i> {{post.dislikes}}</a>
+                      </label>
+                      <input type="submit" id="submitdislike{{post.pk}}" name = "submitdislike"  style="visibility:hidden; display:none;" >
+                    </form> -->
+
                   </div>
                 </div>
               </div>
-
-              <!-- Post Content
-              ================================================= -->
-              <div class="post-content">
-
-                <!--Post Date-->
-                <div class="post-date hidden-xs hidden-sm">
-                  <h5>Sarah</h5>
-                  <p class="text-grey">10/22/2016</p>
-                </div><!--Post Date End-->
-
-                <img src="{%static 'images/post-images/13.jpg' %}" alt="post-image" class="img-responsive post-image" />
-                <div class="post-container">
-                  <img src="{%static 'images/users/user-1.jpg' %}" alt="user" class="profile-photo-md pull-left" />
-                  <div class="post-detail">
-                    <div class="user-info">
-                      <h5><a href="timeline   " class="profile-link">Sarah Cruiz</a> <span class="following">following</span></h5>
-                      <p class="text-muted">Yesterday</p>
-                    </div>
-                    <div class="reaction">
-                      <a class="btn text-green"><i class="icon ion-thumbsup"></i> 49</a>
-                      <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
-                    </div>
-                    <div class="line-divider"></div>
-                    <div class="post-text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                    </div>
-                    <div class="line-divider"></div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="timeline   " class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-4.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="timeline   " class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm" />
-                      <input type="text" class="form-control" placeholder="Post a comment">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Post Content
-              ================================================= -->
-              <div class="post-content">
-
-                <!--Post Date-->
-                <div class="post-date hidden-xs hidden-sm">
-                  <h5>Sarah</h5>
-                  <p class="text-grey">10/21/2016</p>
-                </div><!--Post Date End-->
-
-                <div class="post-container">
-                  <img src="{%static 'images/users/user-1.jpg' %}" alt="user" class="profile-photo-md pull-left" />
-                  <div class="post-detail">
-                    <div class="user-info">
-                      <h5><a href="timeline   " class="profile-link">Sarah Cruiz</a> <span class="following">following</span></h5>
-                      <p class="text-muted">2 days ago</p>
-                    </div>
-                    <div class="reaction">
-                      <a class="btn text-green"><i class="icon ion-thumbsup"></i> 49</a>
-                      <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
-                    </div>
-                    <div class="line-divider"></div>
-                    <div class="post-text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                    </div>
-                    <div class="line-divider"></div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="timeline   " class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-4.jpg' %}" alt="" class="profile-photo-sm" />
-                      <p><a href="timeline   " class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="post-comment">
-                      <img src="{%static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm" />
-                      <input type="text" class="form-control" placeholder="Post a comment">
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
 
             </div>
             <div class="col-md-2 static">

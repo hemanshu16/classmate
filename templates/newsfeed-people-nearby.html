@@ -121,9 +121,9 @@
           ================================================= -->
     			<div class="col-md-3 static">
             <div class="profile-card">
-            	<img src="{% static 'images/users/user-1.jpg' %}" alt="user" class="profile-photo" />
-            	<h5><a href="timeline  " class="text-white">Sarah Cruiz</a></h5>
-            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
+            	<img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="user" class="profile-photo" />
+            	<h5><a href="timeline  " class="text-white">{{profile.user.username}}</a></h5>
+            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> &nbsp; {{profile.friendlist|length}} &nbsp; Friends</a>
             </div><!--profile card ends-->
             <ul class="nav-news-feed">
               <li><i class="icon ion-ios-paper"></i><div><a href="newsfeed  ">My Newsfeed</a></div></li>
@@ -156,7 +156,7 @@
             	<div class="row">
             		<div class="col-md-7 col-sm-7">
                   <div class="form-group">
-                    <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-md" />
+                    <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-md" />
                     <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
                   </div>
                 </div>
@@ -177,159 +177,26 @@
             <!-- Nearby People List
             ================================================= -->
             <div class="people-nearby">
-              <div class="google-maps">
+              <!-- <div class="google-maps">
                 <div id="map" class="map"></div>
-              </div>
+              </div> -->
+              {% for otheruser in otherusers %}
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-15.jpg' %}" alt="user" class="profile-photo-lg" />
+                    <img src="{% if otheruser.image %} {{otheruser.image.url}} {% endif %}" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Sophia Page</a></h5>
-                    <p>Software Engineer</p>
-                    <p class="text-muted">500m away</p>
+                    <h5><a href="/timeline/{{otheruser.user.username}}" class="profile-link">{{otheruser.user.username}}</a></h5>
+                    <p>{{otheruser.universityName}}</p>
+                    <p class="text-muted">{{otheruser.endYear}}</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
+                    <button  href="/add-friend/{{otheruser.user.username}}" class="btn btn-primary pull-right">Add Friend</button>
                   </div>
                 </div>
               </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-16.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Emma Johnson</a></h5>
-                    <p>Model at Fashion</p>
-                    <p class="text-muted">800m away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-17.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Nora Wilson</a></h5>
-                    <p>Writer at Newspaper</p>
-                    <p class="text-muted">2.5km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-11.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Diana Amber</a></h5>
-                    <p>Student</p>
-                    <p class="text-muted">700m away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-18.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Addison Thomas</a></h5>
-                    <p>Barber at Fashion</p>
-                    <p class="text-muted">1.5km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-19.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Jonathon Thompson</a></h5>
-                    <p>Fashion Designer</p>
-                    <p class="text-muted">2km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-14.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Olivia Steward</a></h5>
-                    <p>Creative Director</p>
-                    <p class="text-muted">2km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-20.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Elena Foster</a></h5>
-                    <p>Executive Officer</p>
-                    <p class="text-muted">4km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-13.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Brian Walton</a></h5>
-                    <p>Designer at Designer</p>
-                    <p class="text-muted">3km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="{% static 'images/users/user-12.jpg' %}" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Cris Haris</a></h5>
-                    <p>General Manager at Manager</p>
-                    <p class="text-muted">1km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
           </div>
 
@@ -338,41 +205,15 @@
     			<div class="col-md-2 static">
             <div class="suggestions" id="sticky-sidebar">
               <h4 class="grey">Who to Follow</h4>
+              {% for otheruser in otherusers %}
               <div class="follow-user">
-                <img src="{% static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm pull-left" />
+                <img src="{% if otheruser.image %} {{otheruser.image.url}} {% endif %}" alt="" class="profile-photo-sm pull-left" />
                 <div>
-                  <h5><a href="timeline  ">Diana Amber</a></h5>
-                  <a href="#" class="text-green">Add friend</a>
+                  <h5><a href="/timeline/{{otheruser.user.username}}">{{otheruser.user.username}}</a></h5>
+                  <a href="/add-friend/{{otheruser.user.username}}" class="text-green">Add friend</a>
                 </div>
               </div>
-              <div class="follow-user">
-                <img src="{% static 'images/users/user-12.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline  ">Cris Haris</a></h5>
-                  <a href="#" class="text-green">Add friend</a>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="{% static 'images/users/user-13.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline  ">Brian Walton</a></h5>
-                  <a href="#" class="text-green">Add friend</a>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="{% static 'images/users/user-14.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline  ">Olivia Steward</a></h5>
-                  <a href="#" class="text-green">Add friend</a>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="{% static 'images/users/user-15.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline  ">Sophia Page</a></h5>
-                  <a href="#" class="text-green">Add friend</a>
-                </div>
-              </div>
+              {% endfor %}
             </div>
           </div>
     		</div>

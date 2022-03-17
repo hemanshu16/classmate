@@ -29,3 +29,24 @@ class Profile(models.Model):
         )
     image = models.ImageField(upload_to='pics', null=True)
     banner_image = models.ImageField(upload_to='pics', null=True)
+
+class Post(models.Model):
+    image = models.ImageField(upload_to='pics', null=True)
+    desc = models.TextField(null = True)
+    username = models.TextField(null = True)
+    likes = models.IntegerField(default=0)
+    likedby = ArrayField(
+            models.CharField(max_length=100, blank=True),
+            size=20,null=True,
+        )
+    dislikes = models.IntegerField(default=0)
+    dislikedby = ArrayField(
+            models.CharField(max_length=100, blank=True),
+            size=20,null=True,
+        ) 
+    postdate = models.DateField(null=True)
+
+class Comment(models.Model):
+    username = models.TextField(null = True)
+    comment = models.TextField(null = True)
+    post_id = models.BigIntegerField(null = True)

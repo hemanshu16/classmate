@@ -122,9 +122,9 @@
           ================================================= -->
     			<div class="col-md-3" style="position:static;">
             <div class="profile-card">
-            	<img src="{% static 'images/users/user-1.jpg' %}" alt="user" class="profile-photo" />
-            	<h5><a href="timeline   " class="text-white">Sarah Cruiz</a></h5>
-            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
+            	<img src="{% if myuser.image %} {{myuser.image.url}} {% endif %}" alt="user" class="profile-photo" />
+            	<h5><a href="timeline   " class="text-white">{{myuser.user.username}}</a></h5>
+            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> &nbsp;{{ myuser.friendlist|length }} &nbsp;Friends</a>
             </div><!--profile card ends-->
             <ul class="nav-news-feed">
               <li><i class="icon ion-ios-paper"></i><div><a href="newsfeed   ">My Newsfeed</a></div></li>
@@ -157,7 +157,7 @@
             	<div class="row">
             		<div class="col-md-7 col-sm-7">
                   <div class="form-group">
-                    <img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-md" />
+                    <img src="{% if myuser.image %} {{myuser.image.url}} {% endif %}" alt="" class="profile-photo-md" />
                     <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
                   </div>
                 </div>

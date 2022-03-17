@@ -41,9 +41,9 @@ def index_register(request):
             x = datetime.datetime(year, month, day)
             user=User.objects.create_user(username=username,password=password,email=email,first_name=firstname,last_name=lastname)
             #user.save()
-            profile = Profile(user=user,gender=gender,city=city,country=country,dateOfBirth=x)
+            profile = Profile(user=user,gender=gender,city=city,country=country,dateOfBirth=x,image='pics/avatardefault_92824_2gthZ14.png')
             profile.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/index-register')
 
         return HttpResponseRedirect('/')
     else:

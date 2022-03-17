@@ -4,6 +4,8 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
 import friends
 from friends.models import Profile
+from friends.models import Post
+from friends.models import Comment
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 import datetime
@@ -33,18 +35,24 @@ def edit_profile_basic(request):
             information = request.POST["information"]
             user = User.objects.get(username = username)
             profile = Profile.objects.get(user_id=user.id)
-            profile.user.firstname = firstname
-            profile.user.lastname = lastname
+            user.first_name = firstname
+            user.last_name = lastname
+            profile.user.first_name = firstname
+            profile.user.last_name = lastname
             if(user.email != email and User.objects.filter(email = email).exists()):
-                messages.info(request, str(email) + 'This email is alread exists')
+                messages.info(request, str(email) + 'This email is already exists')
             else : 
                 profile.user.email = email
+                user.email = email
             profile.dateOfBirth = datetime.datetime(int(year), int(month), int(day))
             profile.city = city
             profile.country = country
             profile.aboutMe = information
             profile.gender = gender
-            profile.image = request.FILES['profileimg']
+
+            if 'profileimg' in request.FILES:
+               profile.image = request.FILES["profileimg"] 
+            user.save()   
             profile.save()
         user1 = User.objects.get(username=request.session["username"])
         profile1 = Profile.objects.get(user_id=user1.id)
@@ -140,8 +148,62 @@ def faq(request) :
     return render(request,'faq.html')
 
 def newsfeed(request) :
-    print(request.user)
-    return render(request,'newsfeed.html')
+    if 'username' in request.session :
+        user = User.objects.get(username=request.session["username"])
+        profile = Profile.objects.get(user_id=user.id)
+
+        if request.method == "POST":
+
+            if "submitpost" in request.POST:
+               post = Post(username=request.session["username"],image=request.FILES["postImg"],desc=request.POST["desc"],likes=0,dislikes=0,postdate=datetime.date.today())
+               post.save()
+
+            if "submitlike" in request.POST:
+               print(request.POST["postid"])
+               post_for_like = Post.objects.get(id=int(request.POST["postid"]))
+               print(post_for_like.likedby)
+               if post_for_like.likedby is None:
+                   post_for_like.likes = post_for_like.likes + 1
+                   List1 = [request.session['username']]
+                   post_for_like.likedby = List1
+                   post_for_like.save()
+               elif request.session['username'] not in post_for_like.likedby:
+                   post_for_like.likes = post_for_like.likes + 1
+                   if post_for_like.likedby is not None :
+                      post_for_like.likedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_like.likedby = List1
+                   post_for_like.save()   
+
+            if "submitdislike" in request.POST:
+               post_for_dislike = Post.objects.get(id= int(request.POST["postid"]))
+               if post_for_dislike.dislikedby is None:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   List1 = [request.session['username']]
+                   post_for_dislike.dislikedby = List1
+                   post_for_dislike.save()
+               elif request.session['username'] not in post_for_dislike.dislikedby:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   if post_for_dislike.dislikedby is not None :
+                      post_for_dislike.dislikedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_dislike.dislikedby = List1
+                   post_for_dislike.save() 
+
+            if "submitcomment" in request.POST:
+                comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
+                comment.save()
+
+        post = Post.objects.filter().order_by('-id')
+        comment = Comment.objects.all()
+        otheruser = Profile.objects.all()
+        return render(request, 'newsfeed.html', {'profile':profile,'otherusers':otheruser,'posts':post,'comments':comment})
+    else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
+
 
 def newsfeed_friends(request) :
     if 'username' in request.session :
@@ -156,7 +218,9 @@ def newsfeed_friends(request) :
                     profile = Profile.objects.get(user_id = user.id)
                     friendlist.append(profile)
         otheruser = Profile.objects.all()
-        return render(request,'newsfeed-friends.html', {'profile': friendlist, 'users':otheruser })
+        user = User.objects.get(username = request.session["username"])
+        profile = Profile.objects.get(user_id = user.id)
+        return render(request,'newsfeed-friends.html', {'profile': friendlist, 'users':otheruser,'myuser':profile })
     messages.info(request, 'First you need to loging for view my-profile')
     return HttpResponseRedirect('/index-register' )    
 
@@ -185,7 +249,48 @@ def timeline(request,username = None) :
     if(User.objects.filter(username = username).exists()):
        user = User.objects.get(username = username)
        profile = Profile.objects.get(user_id = user.id)
-       return render(request, "timeline.html", {'profile' : profile})
+
+       if request.method == "POST":
+           if "submitlike" in request.POST:
+               print(request.POST["postid"])
+               post_for_like = Post.objects.get(id=int(request.POST["postid"]))
+               print(post_for_like.likedby)
+               if post_for_like.likedby is None:
+                   post_for_like.likes = post_for_like.likes + 1
+                   List1 = [request.session['username']]
+                   post_for_like.likedby = List1
+                   post_for_like.save()
+               elif request.session['username'] not in post_for_like.likedby:
+                   post_for_like.likes = post_for_like.likes + 1
+                   if post_for_like.likedby is not None :
+                      post_for_like.likedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_like.likedby = List1
+                   post_for_like.save()   
+
+           if "submitdislike" in request.POST:
+               post_for_dislike = Post.objects.get(id= int(request.POST["postid"]))
+               if post_for_dislike.dislikedby is None:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   List1 = [request.session['username']]
+                   post_for_dislike.dislikedby = List1
+                   post_for_dislike.save()
+               elif request.session['username'] not in post_for_dislike.dislikedby:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   if post_for_dislike.dislikedby is not None :
+                      post_for_dislike.dislikedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_dislike.dislikedby = List1
+                   post_for_dislike.save() 
+
+           if "submitcomment" in request.POST:
+                comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
+                comment.save()
+       post = Post.objects.filter(username=username)
+       comments = Comment.objects.filter()
+       return render(request, "timeline.html", {'profile' : profile,'posts':post,'comments':comments})
     return render(request,"404.html")
 
 def newsfeed_images(request) :
@@ -195,7 +300,14 @@ def newsfeed_messages(request) :
     return render(request,'newsfeed-messages.html')
 
 def newsfeed_people_nearby(request) :
-    return render(request,'newsfeed-people-nearby.html')
+     if 'username' in request.session :
+        user = User.objects.get(username=request.session["username"])
+        profile = Profile.objects.get(user_id=user.id)
+        otheruser = Profile.objects.all()
+        return render(request, 'newsfeed-people-nearby.html', {'profile':profile,'otherusers':otheruser})
+     else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
 def newsfeed_videos(request) :
     return render(request,'newsfeed-videos.html')
@@ -213,4 +325,9 @@ def add_friend(request,friend) :
         profile.save()
         return HttpResponseRedirect('/newsfeed-friends' )
     messages.info(request, 'First you need to loging for view my-profile')
+    return HttpResponseRedirect('/index-register' )
+
+
+def logout(request):
+    auth.logout(request)
     return HttpResponseRedirect('/index-register' )

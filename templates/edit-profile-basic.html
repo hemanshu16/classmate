@@ -141,7 +141,7 @@
                 <label for="image" >
                 <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="{{user}}" title="click for change image"
                   class="img-responsive profile-photo" /></label>
-                  <input type="file" id="image" name = "profileimg" style="visibility:hidden; display: none;">
+                  <input type="file" id="image" name = "profileimg"  style="visibility:hidden; display: none;">
                 <h3>{{user}}</h3>
                 <p class="text-muted">{{profile.universityName}}</p>
               </div>
@@ -154,7 +154,7 @@
                 <li><a href="timeline-friends   ">Friends</a></li>
               </ul>
               <ul class="follow-me list-inline">
-                <li>1,299 people following her</li>
+                <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>
                 
                 
               

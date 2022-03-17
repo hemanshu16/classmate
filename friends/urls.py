@@ -26,5 +26,6 @@ urlpatterns = [
     path('timeline-about/<str:username>',views.timeline_about,name="timeline_about"),
     path('add-friend/<str:friend>',views.add_friend, name="add_friend"),
     path('timeline/',views.timeline,name="timeline"),
-    path('timeline/<str:username>',views.timeline,name="timeline")
+    path('timeline/<str:username>',views.timeline,name="timeline"),
+    path("logout",views.logout,name="logout")
 ]
