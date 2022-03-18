@@ -11,7 +11,7 @@
 		<meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
 		<meta name="robots" content="index, follow" />
 		<title>My Timeline | This is My Coolest Profile</title>
-
+  
     <!-- Stylesheets
     ================================================= -->
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
@@ -138,10 +138,10 @@
                </div>
                <div class="col-md-9">
                  <ul class="list-inline profile-menu">
-                   <li><a href="timeline   ">Timeline</a></li>
-                   <li><a href="timeline-about   " class="active">About</a></li>
-                   <li><a href="timeline-album   ">Album</a></li>
-                   <li><a href="timeline-friends   ">Friends</a></li>
+                   <li><a href="/timeline" class="active">Timeline</a></li>
+                   <li><a href="/timeline-about" >About</a></li>
+                   <li><a href="/timeline-album">Album</a></li>
+                   <li><a href="/timeline-friends">Friends</a></li>
                  </ul>
                  <ul class="follow-me list-inline">
                    <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>
@@ -164,10 +164,10 @@
              </div>
              <div class="mobile-menu">
                <ul class="list-inline">
-                 <li><a href="/timline   ">Timeline</a></li>
-                 <li><a href="/timeline-about   " class="active">About</a></li>
-                 <li><a href="/timeline-album   ">Album</a></li>
-                 <li><a href="/timeline-friends   ">Friends</a></li>
+                 <li><a href="/timline" class="active">Timeline</a></li>
+                 <li><a href="/timeline-about" >About</a></li>
+                 <li><a href="/timeline-album">Album</a></li>
+                 <li><a href="/timeline-friends">Friends</a></li>
                </ul>
                
                <li><button class="btn-primary">Add Friend</button></li>
@@ -184,28 +184,32 @@
 
               <!-- Post Create Box
               ================================================= -->
-              <div class="create-post">
-                <div class="row">
-                  <div class="col-md-7 col-sm-7">
-                    <div class="form-group">
-                      <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-md" />
-                      <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
+              <form name="post-info" id="post-info" class="form-inline" method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                <div class="create-post">
+                  <div class="row">
+                    <div class="col-md-7 col-sm-7">
+                      <div class="form-group">
+                        
+                        <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-md" />
+                        <textarea name="desc" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish" required></textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                      <div class="tools">
+                        <ul class="publishing-tools list-inline">
+                          <li>
+                          <label for="postImg" >
+                            <i class="ion-images" title="Upload Post" style="font-size:xx-large;"></i>
+                            </label>
+                          <input type="file" id="postImg" name = "postImg"  style="visibility:hidden; display:none;" required>
+                          </li>
+                        </ul>
+                        <button name="submitpost" class="btn btn-primary pull-right">Publish</button>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-5 col-sm-5">
-                    <div class="tools">
-                      <ul class="publishing-tools list-inline">
-                        <li><a href="#"><i class="ion-compose"></i></a></li>
-                        <li><a href="#"><i class="ion-images"></i></a></li>
-                        <li><a href="#"><i class="ion-ios-videocam"></i></a></li>
-                        <li><a href="#"><i class="ion-map"></i></a></li>
-                      </ul>
-                      <button class="btn btn-primary pull-right">Publish</button>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- Post Create Box End-->
-
+                </div><!-- Post Create Box End-->
+                </form>
               <!-- Post Content
               ================================================= -->
               {% for post in posts%}
@@ -215,31 +219,36 @@
                 <div class="post-date hidden-xs hidden-sm">
                   <h5>{{post.username}}</h5>
                   <p class="text-grey">{{post.postdate}}</p>
+                  <form  method="post"> {%csrf_token%}
+                  <input type="hidden" name="deletepost" value="{{post.id}}" >
+                  <button type="submit" style="background-color:white;border:none;">Delete Post</button>
+                  </form>
                 </div><!--Post Date End-->
-
-                <img src="{{post.image.url}}" alt="post-image" class="img-responsive post-image" />
+                <form action="deletepost">
+                  <label for="img" >
+                <img src="{{post.image.url}}" alt="post-image"  class="img-responsive post-image" id="img" /></label> </form>
                 <div class="post-container">
                   <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="user" class="profile-photo-md pull-left" />
                   <div class="post-detail">
                     <div class="user-info">
-                      <h5><a href="/timeline-about/{{profile.user.username}}" class="profile-link">{{post.username}}</a> <span class="following">following</span></h5>
+                      <h5><a href="/timeline-about/{{profile.user.username}}" class="profile-link">{{post.username}}</a></h5>
                       <p class="text-muted">Published a photo on {{post.postdate}}</p>
                     </div>
 
                     <div class="reaction">
 
-                      <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                      <form method="POST" enctype="multipart/form-data" style=" display:inline-block ;" >{%csrf_token%}
                         <input type="hidden" name="postid" value="{{post.pk}}"/>
                         <label for="submitlike{{post.pk}}" >
-                          <a class="btn text-green"><i class="icon ion-thumbsup" style="font-size:xx-large;"></i> {{post.likes}}</a>
+                          <a class="btn text-green"><i class="icon ion-thumbsup" style="font-size:x-large;"></i> {{post.likes}}</a>
                           </label>
                         <input type="submit" id="submitlike{{post.pk}}" name = "submitlike"  style="visibility:hidden; display:none;" >
                       </form>
 
-                      <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                      <form method="POST" enctype="multipart/form-data" style=" display:inline-block ;">{%csrf_token%}
                         <input type="hidden" name="postid" value="{{post.pk}}"/>
                         <label for="submitdislike{{post.pk}}" >
-                          <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:xx-large;"></i> {{post.dislikes}}</a>
+                          <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:x-large;"></i> {{post.dislikes}}</a>
                         </label>
                         <input type="submit" id="submitdislike{{post.pk}}" name = "submitdislike"  style="visibility:hidden; display:none;" >
                       </form>
@@ -255,7 +264,8 @@
                     {% for comment in comments %}
                     {% if comment.post_id == post.pk %}
                     <div class="post-comment">
-                      <img src="{%static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm" />
+                      <img src="/media/pics/{{comment.username}}.png"  onerror="this.src='/media/pics/{{comment.username}}.jpg'" class="profile-photo-sm" />
+                      
                       <p><a href="timeline" class="profile-link">{{comment.username}}</a> {{comment.comment}} </p>
                     </div>
                     {% endif %}
@@ -265,7 +275,7 @@
                     <div class="post-comment">
                       <img src="{% if profile.image %} {{profile.image.url}} {% endif %}" alt="" class="profile-photo-sm" />
                       <input type="hidden" name="postid" value="{{post.pk}}"/>
-                      <textarea name="comment" cols="30" rows="1" placeholder="Post a comment"></textarea>&nbsp;&nbsp;
+                      <textarea name="comment" cols="30"  class="form-control" rows="4" cols="400" style="height: 33px;"Post a comment"></textarea>&nbsp;&nbsp;
                       <button id="submitcomment{{post.pk}}" name="submitcomment" class="btn btn-primary pull-right" style="height : 35px;">Comment</button>
                     </div>
                   </form>

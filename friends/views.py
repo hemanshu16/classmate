@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
 import friends
+import os
 from friends.models import Profile
 from friends.models import Post
 from friends.models import Comment
@@ -51,6 +52,8 @@ def edit_profile_basic(request):
             profile.gender = gender
 
             if 'profileimg' in request.FILES:
+               if(os.path.exists(os.path.join('C:/Users/Visha/Documents/GitHub/ClassMate/media/',str(profile.image.name)))) :
+                  os.remove(os.path.join('C:/Users/Visha/Documents/GitHub/ClassMate/media/',str(profile.image.name))) 
                profile.image = request.FILES["profileimg"] 
             user.save()   
             profile.save()
@@ -163,10 +166,14 @@ def newsfeed(request) :
                post_for_like = Post.objects.get(id=int(request.POST["postid"]))
                print(post_for_like.likedby)
                if post_for_like.likedby is None:
-                   post_for_like.likes = post_for_like.likes + 1
-                   List1 = [request.session['username']]
-                   post_for_like.likedby = List1
-                   post_for_like.save()
+                    post_for_like.likes = post_for_like.likes + 1
+                    List1 = [request.session['username']]
+                    post_for_like.likedby = List1
+
+                    if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])
+                    post_for_like.save()
                elif request.session['username'] not in post_for_like.likedby:
                    post_for_like.likes = post_for_like.likes + 1
                    if post_for_like.likedby is not None :
@@ -174,6 +181,9 @@ def newsfeed(request) :
                    else : 
                       List1 = [request.session['username']]
                       post_for_like.likedby = List1
+                   if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])   
                    post_for_like.save()   
 
             if "submitdislike" in request.POST:
@@ -182,6 +192,9 @@ def newsfeed(request) :
                    post_for_dislike.dislikes = post_for_dislike.dislikes + 1
                    List1 = [request.session['username']]
                    post_for_dislike.dislikedby = List1
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
                    post_for_dislike.save()
                elif request.session['username'] not in post_for_dislike.dislikedby:
                    post_for_dislike.dislikes = post_for_dislike.dislikes + 1
@@ -190,12 +203,20 @@ def newsfeed(request) :
                    else : 
                       List1 = [request.session['username']]
                       post_for_dislike.dislikedby = List1
-                   post_for_dislike.save() 
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
+                   post_for_dislike.save()
+                  
 
             if "submitcomment" in request.POST:
                 comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
                 comment.save()
 
+         
+            if "deletecomment" in request.POST :
+                Comment.objects.filter(id=int(request.POST['commentid'])).delete()
+            
         post = Post.objects.filter().order_by('-id')
         comment = Comment.objects.all()
         otheruser = Profile.objects.all()
@@ -249,6 +270,10 @@ def timeline(request,username = None) :
     if(User.objects.filter(username = username).exists()):
        user = User.objects.get(username = username)
        profile = Profile.objects.get(user_id = user.id)
+       
+       if "submitpost" in request.POST:
+               post = Post(username=request.session["username"],image=request.FILES["postImg"],desc=request.POST["desc"],likes=0,dislikes=0,postdate=datetime.date.today())
+               post.save()
 
        if request.method == "POST":
            if "submitlike" in request.POST:
@@ -259,6 +284,9 @@ def timeline(request,username = None) :
                    post_for_like.likes = post_for_like.likes + 1
                    List1 = [request.session['username']]
                    post_for_like.likedby = List1
+                   if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])
                    post_for_like.save()
                elif request.session['username'] not in post_for_like.likedby:
                    post_for_like.likes = post_for_like.likes + 1
@@ -267,6 +295,9 @@ def timeline(request,username = None) :
                    else : 
                       List1 = [request.session['username']]
                       post_for_like.likedby = List1
+                   if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])   
                    post_for_like.save()   
 
            if "submitdislike" in request.POST:
@@ -275,6 +306,9 @@ def timeline(request,username = None) :
                    post_for_dislike.dislikes = post_for_dislike.dislikes + 1
                    List1 = [request.session['username']]
                    post_for_dislike.dislikedby = List1
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
                    post_for_dislike.save()
                elif request.session['username'] not in post_for_dislike.dislikedby:
                    post_for_dislike.dislikes = post_for_dislike.dislikes + 1
@@ -283,12 +317,21 @@ def timeline(request,username = None) :
                    else : 
                       List1 = [request.session['username']]
                       post_for_dislike.dislikedby = List1
-                   post_for_dislike.save() 
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
+                   post_for_dislike.save()
 
            if "submitcomment" in request.POST:
-                comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
-                comment.save()
+                if len(request.POST["comment"].strip()) > 0 :
+                    comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
+                    comment.save()
+
+           if "deletepost" in request.POST :
+               Post.objects.filter(id=int(request.POST['deletepost'])).delete()
+
        post = Post.objects.filter(username=username)
+       
        comments = Comment.objects.filter()
        return render(request, "timeline.html", {'profile' : profile,'posts':post,'comments':comments})
     return render(request,"404.html")
@@ -317,7 +360,8 @@ def add_friend(request,friend) :
         user = User.objects.get(username = request.session["username"])
         profile = Profile.objects.get(user_id= user.id)
         if profile.friendlist is not None :
-            profile.friendlist.append(friend)
+            if friend  not in profile.friendlist :
+                profile.friendlist.append(friend)
         else : 
            print(friend)
            List1 = [friend]

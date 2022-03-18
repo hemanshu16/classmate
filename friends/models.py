@@ -1,11 +1,19 @@
+from distutils import extension
+from distutils.command.upload import upload
 from statistics import mode
 from django.db import models
-
+import os
 # Create your models here.
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
 import friends
+
+def path_and_rename(instance, filename) :
+    upload_to = 'pics'
+    file_extension = filename.split('.')[-1]
+    filename = '{}.{}'.format(instance.user.username,file_extension)
+    return os.path.join(upload_to,filename)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -27,7 +35,7 @@ class Profile(models.Model):
             models.CharField(max_length=100, blank=True),
             size=20,null=True,
         )
-    image = models.ImageField(upload_to='pics', null=True)
+    image = models.ImageField(upload_to=path_and_rename, null=True)
     banner_image = models.ImageField(upload_to='pics', null=True)
 
 class Post(models.Model):

@@ -183,29 +183,32 @@
             <!-- Post Content
             ================================================= -->
             {% for post in posts %}
-            {% if post.username in profile.user.username %}
+            {% if post.username in profile.friendlist %}
             <div class="post-content">
               <img src="{{post.image.url}}" alt="post-image" class="img-responsive post-image" />
               <div class="post-container">
-                <img src="" alt="user" class="profile-photo-md pull-left" />
+                <img src="/media/pics/{{post.username}}.png"  onerror="this.src='/media/pics/{{post.username}}.jpg'" class="profile-photo-md pull-left" />
+                
                 <div class="post-detail">
                   <div class="user-info">
                     <h5><a href="timeline " class="profile-link">{{post.username}}</a> <span class="following">following</span></h5>
                     <p class="text-muted">Published a photo on {{post.postdate}}</p>
                   </div>
-                  <div class="reaction">
-                    <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                  <div class="reaction" >
+                   
+                   
+                     <form method="POST" style=" display:inline-block ;" >{%csrf_token%}
                       <input type="hidden" name="postid" value="{{post.pk}}"/>
-                      <label for="submitlike{{post.pk}}" >
-                        <a class="btn text-green"><i class="icon ion-thumbsup" style="font-size:xx-large;"></i> {{post.likes}}</a>
+                      <label for="submitlike{{post.pk}}" style="display: inline-block">
+                        <a class="btn text-green"><i class="icon ion-thumbsup" style="font-size:x-large;"></i> {{post.likes}}</a>
                         </label>
-                      <input type="submit" id="submitlike{{post.pk}}" name = "submitlike"  style="visibility:hidden; display:none;" >
-                    </form>
+                      <input type="submit" id="submitlike{{post.pk}}" name = "submitlike"  style="visibility:hidden; display:none; " >
+                    </form> 
 
-                    <form method="POST" enctype="multipart/form-data" >{%csrf_token%}
+                    <form method="POST" enctype="multipart/form-data"style="display:inline-block ;" >{%csrf_token%}
                       <input type="hidden" name="postid" value="{{post.pk}}"/>
-                      <label for="submitdislike{{post.pk}}" >
-                        <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:xx-large;"></i> {{post.dislikes}}</a>
+                      <label for="submitdislike{{post.pk}}" style="display: inline-block">
+                        <a class="btn text-red"><i class="fa fa-thumbs-down" style="font-size:x-large;"></i> {{post.dislikes}}</a>
                       </label>
                       <input type="submit" id="submitdislike{{post.pk}}" name = "submitdislike"  style="visibility:hidden; display:none;" >
                     </form>
@@ -218,8 +221,18 @@
                   {% for comment in comments %}
                     {% if comment.post_id == post.pk %}
                     <div class="post-comment">
-                      <img src="{%static 'images/users/user-11.jpg' %}" alt="" class="profile-photo-sm" />
+                      <img src="/media/pics/{{comment.username}}.png"  onerror="this.src='/media/pics/{{comment.username}}.jpg'" class="profile-photo-sm" />
+                      
                       <p><a href="timeline" class="profile-link">{{comment.username}}</a> {{comment.comment}} </p>
+                      {% if comment.username == profile.user.username %}
+                      <form method="POST" style=" display:inline-block ;" >{%csrf_token%}
+                        <input type="hidden" name="commentid" value="{{comment.id}}"/>
+                        <label for="deletecomment{{comment.id}}" style="display: inline-block; position: absolute; right:0px;">
+                         delete comment  
+                        </label>
+                        <input type="submit" id="deletecomment{{comment.id}}"  name="deletecomment" style="visibility:hidden; display:none; " >
+                      </form> 
+                      {% endif %}
                     </div>
                     {% endif %}
                     {% endfor %}
