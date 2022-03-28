@@ -340,7 +340,23 @@ def newsfeed_images(request) :
     return render(request,'newsfeed-images.html')
 
 def newsfeed_messages(request) :
-    return render(request,'newsfeed-messages.html')
+    if 'username' in request.session :
+        user = User.objects.get(username = request.session["username"])
+        profile = Profile.objects.get(user_id = user.id)
+        friendlist = []
+        friends = profile.friendlist 
+        if friends is not None :
+            for friend in friends :
+                if friend is not None :
+                    user = User.objects.get(username = friend)
+                    profile = Profile.objects.get(user_id = user.id)
+                    friendlist.append(profile)
+        otheruser = Profile.objects.all()
+        user = User.objects.get(username = request.session["username"])
+        profile = Profile.objects.get(user_id = user.id)
+        return render(request,'newsfeed-messages.html', {'profile': friendlist, 'users':otheruser,'myuser':profile })
+    messages.info(request, 'First you need to loging for view my-profile')
+    return HttpResponseRedirect('/index-register' )
 
 def newsfeed_people_nearby(request) :
      if 'username' in request.session :
