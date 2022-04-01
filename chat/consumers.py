@@ -1,5 +1,5 @@
 import json
-
+from datetime import datetime
 from channels.generic.websocket import AsyncWebsocketConsumer # The class we're using
 from asgiref.sync import sync_to_async # Implement later
 from .models import Message
@@ -30,15 +30,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
      message = data['message']
      username = data['username']
      room = data['room']
+     temp_time = datetime.now()
+     time = temp_time.strftime("%d %b, %Y, %H:%M:%S %p")
 
-     await self.save_message(username, room, message)
+     await self.save_message(username, room, message,time)
     # Send message to room group
      await self.channel_layer.group_send(
         self.room_group_name,
         {
         'type': 'chat_message',
         'message': message,
-        'username': username
+        'username': username,
+         'time' : time 
         }
     )
 
@@ -46,13 +49,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
   async def chat_message(self, event):
      message = event['message']
      username = event['username']
-
+     time = event['time']
     # Send message to WebSocket
      await self.send(text_data=json.dumps({
         'message': message,
-        'username': username
+        'username': username,
+        'time' : time
     }))
 
   @sync_to_async
-  def save_message(self, username, room, message):
-    Message.objects.create(username=username, room=room, content=message)
+  def save_message(self, username, room, message,time):
+    
+    Message.objects.create(username=username, room=room, content=message,date_added = time)

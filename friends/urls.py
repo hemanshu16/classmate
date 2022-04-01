@@ -11,6 +11,7 @@ urlpatterns = [
     path('edit-profile-work-edu', views.edit_profile_work_edu, name='edit_profile_work_edu'),
     path('edit-profile-settings', views.edit_profile_settings, name='edit_profile_settings'),
     path('contact', views.contact, name='contact'),
+    path('contact-mail', views.contact_mail, name='contact_mail'),
     path('404', views.not_found, name='not_found'),
     path('faq', views.faq, name='faq'),
     path('newsfeed',views.newsfeed, name='newsfeed'),

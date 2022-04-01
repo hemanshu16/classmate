@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
 import friends
 import os
+from chat.models import Message
 from friends.models import Profile
 from friends.models import Post
 from friends.models import Comment
@@ -12,6 +13,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 import datetime
+
+from django.conf import settings
 # Create your views here.
 
 def index(request) :
@@ -483,11 +486,24 @@ def newsfeed_messages(request) :
                     user = User.objects.get(username = friend)
                     profile = Profile.objects.get(user_id = user.id)
                     friendlist.append(profile)
-        
+        otheruser = Profile.objects.all()
         user = User.objects.get(username = request.session["username"])
         profile = Profile.objects.get(user_id = user.id)
-        otheruser = Profile.objects.filter(universityName=profile.universityName)
-        return render(request,'newsfeed-messages.html', {'profile': friendlist, 'users':otheruser,'myuser':profile })
+        chatlist = []
+        roomname = ""
+        if friend is not None :
+            for friend in friends :
+                if friend is not None :
+                    friend_obj = User.objects.get(username = friend)
+                    friend_id = friend_obj.id
+                    if(friend_id > user.id) :
+                        roomname = friend + user.username
+                    else :
+                        roomname = user.username + friend
+                    chats = []
+                    chats = Message.objects.filter(room = roomname)
+                    chatlist.append(chats)
+        return render(request,'newsfeed-messages.html', {'profile': friendlist, 'users':otheruser,'myuser':profile,'chatlist':chatlist })
     messages.info(request, 'First you need to loging for view my-profile')
     return HttpResponseRedirect('/index-register' )
 
@@ -525,3 +541,19 @@ def add_friend(request,friend) :
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/index-register' )
+
+def contact_mail(request):
+    subject = 'Contact Information'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['info.classmate.official@gmail.com']
+    name = request.POST['name']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    messag = request.POST['message']
+    message =  "    User name : " + name + "\n"
+    message += "    User Email : " + email + "\n"
+    message += "    user Phone No :" + phone + "\n"
+    message += "    User Message : " + messag
+    send_mail( subject, message, email_from, recipient_list )
+    messages.info(request,"Message is Successfully send.")
+    return render(request,'contact.html')

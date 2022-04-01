@@ -131,8 +131,8 @@
                </div>
                <div class="col-md-9">
                  <ul class="list-inline profile-menu">
-                   <li><a href="/timeline" class="active">Timeline</a></li>
-                   <li><a href="/timeline-about" >About</a></li>
+                   <li><a href="/timeline/{{profile.user.username}}" class="active">Timeline</a></li>
+                   <li><a href="/timeline-about/{{profile.user.username}}" >About</a></li>
                  </ul>
                  <ul class="follow-me list-inline">
                    <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>

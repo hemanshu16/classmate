@@ -118,7 +118,8 @@
     <div id="page-contents">
     	<div class="container">
     		<div class="row">
-
+  
+         
     			<!-- Newsfeed Common Side Bar Left
           ================================================= -->
     			<div class="col-md-3 static">
@@ -185,21 +186,21 @@
                   <!-- Contact List in Left-->
                   <ul class="nav nav-tabs contact-list scrollbar-wrapper scrollbar-outer">
 
-                    
-                    <li class="active">
+                    {% for user in profile %}
+                    <li class="active"  onclick="CHAT('{{user.user.username}}','{{user.user.id}}','{{myuser.user.username}}','{{myuser.user.id}}','{{user.image.url}}')">
                       <a href="#contact-1" data-toggle="tab">
                         <div class="contact">
-                        	<img src="{% static 'images/users/user-2.jpg' %}" alt="" class="profile-photo-sm pull-left"/>
+                          <img src="{% if user.image %} {{user.image.url}} {% endif %}" alt="" class="profile-photo-sm pull-left"/>
                         	<div class="msg-preview">
-                        		<h6>Linda Lohan</h6>
-                        		<p class="text-muted">Hi there, how are you</p>
-                            <small class="text-muted">a min ago</small>
-                            <div class="chat-alert">1</div>
+                        		<h6>{{user.user.username }}</h6>
+                        		<p class="text-muted"></p>
+                            <!-- <small class="text-muted">a min ago</small>
+                            <div class="chat-alert">1</div> -->
                         	</div>
                         </div>
                       </a>
                     </li>
-                    
+                    {% endfor %}
                   </ul><!--Contact List in Left End-->
 
                 </div>
@@ -208,268 +209,49 @@
                   <!--Chat Messages in Right-->
                   <div class="tab-content scrollbar-wrapper wrapper scrollbar-outer">
                     <div class="tab-pane active" id="contact-1">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="left">
-                      			<img src="{% static 'images/users/user-2.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Linda Lohan</h5>
-                              	<small class="text-muted">3 days ago</small>
-                              </div>
-                              <p>Hi honey, how are you doing???? Long time no see. Where have you been?</p>
-                            </div>
-                      		</li>
+                      <div class="chat-body" id="chatbody">
+                      	
+                          {% for chats in chatlist %}
+                          {% for chat in chats %}
+                           {% if forloop.counter == 1 %}
+                          <ul class="chat-message" id="{{chat.room}}">
+                            {% endif %}
+                           {% endfor %} 
+                          {% for chat in chats %}
+                          {% if chat.username == myuser.user.username %}
                           <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">3 days ago</small>
-                              </div>
-                              <p>I have been on vacation</p>
-                            </div>
-                      		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">3 days ago</small>
-                              </div>
-                              <p>it was a great time for me. we had a lot of fun <i class="em em-blush"></i></p>
-                            </div>
-                      		</li>
+                            <img src="{% if myuser.image %} {{myuser.image.url}} {% endif %}"alt="" class="profile-photo-sm pull-right" />
+                           {% endif %} 
+                           {% if chat.username != myuser.user.username %}
                           <li class="left">
-                      			<img src="{% static 'images/users/user-2.jpg' %}" alt="" class="profile-photo-sm pull-left" />
+                            {% for user in profile %}
+                            {% if user.user.username == chat.username %}
+                            <img src="{% if user.image %} {{user.image.url}} {% endif %}"alt="" class="profile-photo-sm pull-left" />
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %} 
                       			<div class="chat-item">
                               <div class="chat-item-header">
-                              	<h5>Linda Lohan</h5>
-                              	<small class="text-muted">3 days ago</small>
+                              	<h5>{{chat.username}}</h5>
+                              	<small class="text-muted">{{chat.date_added}}</small>
                               </div>
-                              <p>that's cool I wish I were you <i class="em em-expressionless"></i></p>
+                              <p>{{chat.content}}</p>
                             </div>
                       		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">3 days ago</small>
-                              </div>
-                              <p><i class="em em-hand"></i></p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-2.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Linda Lohan</h5>
-                              	<small class="text-muted">a min ago</small>
-                              </div>
-                              <p>Hi there, how are you</p>
-                            </div>
-                      		</li>
-                      	</ul>
+
+                          {% endfor %}
+                          </ul>
+                          {% endfor %}
+                      	
                       </div>
-                    </div>
-                    <div class="tab-pane" id="contact-2">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="left">
-                      			<img src="{% static 'images/users/user-10.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Julia Cox</h5>
-                              	<small class="text-muted">a day ago</small>
-                              </div>
-                              <p>Hi</p>
-                            </div>
-                      		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">a day ago</small>
-                              </div>
-                              <p>hellow</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-10.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Julia Cox</h5>
-                              	<small class="text-muted">an hour ago</small>
-                              </div>
-                              <p>good</p>
-                            </div>
-                      		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">an hour ago</small>
-                              </div>
-                              <p>see you soon</p>
-                            </div>
-                      		</li>
-                      	</ul>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="contact-3">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-3.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sophia Lee</h5>
-                              	<small class="text-muted">a day ago</small>
-                              </div>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
-                            </div>
-                      		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah  Cruiz</h5>
-                              	<small class="text-muted">13 hours ago</small>
-                              </div>
-                              <p>Okay fine. thank you</p>
-                            </div>
-                      		</li>
-                      	</ul>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="contact-4">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="left">
-                      			<img src="{% static 'images/users/user-4.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>John Doe</h5>
-                              	<small class="text-muted">a day ago</small>
-                              </div>
-                              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-4.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>John Doe</h5>
-                              	<small class="text-muted">a day ago</small>
-                              </div>
-                              <p>hey anybody there</p>
-                            </div>
-                      		</li>
-                      	</ul>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="contact-5">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="left">
-                      			<img src="{% static 'images/users/user-9.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Anna Young</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-9.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Anna Young</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                            </div>
-                      		</li>
-                          <li class="right">
-                      			<img src="{% static 'images/users/user-1.jpg' %}" alt="" class="profile-photo-sm pull-right" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Sarah Cruiz</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>I gotta go</p>
-                            </div>
-                      		</li>
-                      	</ul>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="contact-6">
-                      <div class="chat-body">
-                      	<ul class="chat-message">
-                      		<li class="left">
-                      			<img src="{% static 'images/users/user-8.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Richard Bell</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Hello</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-8.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Richard Bell</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Hi</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-8.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Richard Bell</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Hey</p>
-                            </div>
-                      		</li>
-                          <li class="left">
-                      			<img src="{% static 'images/users/user-8.jpg' %}" alt="" class="profile-photo-sm pull-left" />
-                      			<div class="chat-item">
-                              <div class="chat-item-header">
-                              	<h5>Richard Bell</h5>
-                              	<small class="text-muted">2 days ago</small>
-                              </div>
-                              <p>Hey there</p>
-                            </div>
-                      		</li>
-                      	</ul>
-                      </div>
-                    </div>
+                    </div>   
                   </div><!--Chat Messages in Right End-->
 
                   <div class="send-message">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Type your message">
+                      <input type="text" class="form-control" id="chat-message-input" placeholder="Type your message">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Send</button>
+                        <button class="btn btn-default" id="chat-message-submit" type="button">Send</button>
                       </span>
                     </div>
                   </div>
@@ -594,9 +376,147 @@
       <div class="spinner"></div>
     </div>
     
-    <!--Buy button-->
-    <a href="https://themeforest.net/cart/add_items?item_ids=18711273&amp;ref=thunder-team" target="_blank" class="btn btn-buy"><span class="italy">Buy with:</span><img src="{% static 'images/envato_logo.png' %}" alt="" /><span class="price">Only $20!</span></a>
+   
+    <script>
+        var parent = document.getElementById("chatbody");
+        var innerul = parent.querySelectorAll('ul');
+        for(let i=0; i<innerul.length; i++)
+        {
+          var innerli = innerul[i].querySelectorAll('li');
+          
+          for(let j=0;j<innerli.length; j++)
+          {     
+                var  a = innerli[j] ;
+                a.style.display = 'none';
+               
+          }
+        }
+        function scrollToBottom(activeroom) {
+           let objDiv = document.getElementById(activeroom);
+          
+           objDiv.scrollIntoView(false);
+        }
+        let roomName = '';
+        let userName = '';
+        let chatSocket;
+        let activeroom ;
+        function CHAT(friend,friend_id ,username,user_id, friend_image)
+        {    
+          if(chatSocket != null)
+              {
+                chatSocket.close();
+              }
+          if(activeroom != null)
+          {
+            var innerul = document.getElementById(activeroom);
+             if(innerul != null){
+             var innerli = innerul.querySelectorAll('li');
+             for(var i=0; i<innerli.length; i++)
+             {
+                    
+                  innerli[i].style.display = 'none' ;
+             }
+            }
+            
+          }
+          
+             userName = username;
+             let friend_ID = parseInt(friend_id);
+             let user_ID = parseInt(user_id);
+             if(user_ID > friend_ID)
+             {
+                  roomName = username + friend;
+             }
+             else{
+                  roomName = friend + username;
+             }
+             activeroom = roomName ;
+             var innerul = document.getElementById(roomName);
+             if(innerul != null){
+             var innerli = innerul.querySelectorAll('li');
+             for(var i=0; i<innerli.length; i++)
+             {
+                    
+                  innerli[i].style.display = 'block' ;
+             }
+            }
+            else{
 
+              var parent = document.getElementById("chatbody");
+              parent.innerHTML +=  "<ul class='chat-message' id='"+roomName+"'>  </ul>";
+            }
+           
+            scrollToBottom(roomName);
+             user = " <li class='right'>  "
+              + " <img src='{% if myuser.image %} {{myuser.image.url}} {% endif %}' alt='' class='profile-photo-sm pull-right' />"
+             + " <div class='chat-item'> "
+              + " <div class='chat-item-header'> "
+                + " <h5>"+username+"</h5> "
+               + "  <small class='text-muted'> ";
+             friend = " <li class='left'>  "
+              + " <img src='"+friend_image+"' alt='' class='profile-photo-sm pull-left' />"
+             + " <div class='chat-item'> "
+              + " <div class='chat-item-header'> "
+                + " <h5>"+friend+"</h5> "
+               + "  <small class='text-muted'>";
+
+        chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + roomName
+        + '/'
+        );
+        
+        chatSocket.onclose = function(e) {
+        console.error('The socket closed unexpectedly');
+        };
+
+        chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        if (data.message) {
+           if(data.username == userName){
+             
+            document.getElementById(roomName).innerHTML += ('' + user + ' '+data.time +  "</small> </div>  <p> "+data.message + '</p> </div> </li> ');
+           }
+           else{
+            document.getElementById(roomName).innerHTML += ('' + friend + ' '+data.time +  "</small> </div>  <p> " + data.message + '</p> </div> </li> ');
+           }
+          } else {
+            alert('The message was empty!')
+        }
+        scrollToBottom(roomName);
+        };
+
+        }
+        
+
+      
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+            console.log("submit");
+        }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        console.log(userName);
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': userName,
+            'room': roomName,
+             'time' : new Date().toLocaleString()
+        }));
+
+        messageInputDom.value = '';
+        };
+
+      
+    </script>
     <!-- Scripts
     ================================================= -->
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
