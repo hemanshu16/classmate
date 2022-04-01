@@ -49,57 +49,49 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="index  ">Landing Page 1</a></li>
-                    <li><a href="index-register  ">Landing Page 2</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/timeline ">Timeline</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Newsfeed <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="newsfeed  ">Newsfeed</a></li>
-                    <li><a href="newsfeed-people-nearby  ">Poeple Nearly</a></li>
-                    <li><a href="newsfeed-friends  ">My friends</a></li>
-                    <li><a href="newsfeed-messages  ">Chatroom</a></li>
-                    <li><a href="newsfeed-images  ">Images</a></li>
-                    <li><a href="newsfeed-videos  ">Videos</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                    <li><a href="/newsfeed-friends ">My friends</a></li>
+                    <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                    <li><a href="/newsfeed-images ">Images</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu login">
-                  <li><a href="timeline  ">Timeline</a></li>
-                  <li><a href="timeline-about  ">Timeline About</a></li>
-                  <li><a href="timeline-album  ">Timeline Album</a></li>
-                  <li><a href="timeline-friends  ">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic  ">Edit: Basic Info</a></li>
-                  <li><a href="edit-profile-work-edu  ">Edit: Work</a></li>
-                  <li><a href="edit-profile-interests  ">Edit: Interests</a></li>
-                  <li><a href="edit-profile-settings  ">Account Settings</a></li>
-                  <li><a href="edit-profile-password  ">Change Password</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit: Basic Info</a></li>
+                  <li><a href="/edit-profile-work-edu ">Edit: Work</a></li>
+                  <li><a href="/edit-profile-interests ">Edit: Interests</a></li>
+                  <li><a href="/edit-profile-settings ">Account Settings</a></li>
+                  <li><a href="/edit-profile-password ">Change Password</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle pages" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Pages <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu page-list">
-                  <li><a href="index  ">Landing Page 1</a></li>
-                  <li><a href="index-register  ">Landing Page 2</a></li>
-                  <li><a href="newsfeed  ">Newsfeed</a></li>
-                  <li><a href="newsfeed-people-nearby  ">Poeple Nearly</a></li>
-                  <li><a href="newsfeed-friends  ">My friends</a></li>
-                  <li><a href="newsfeed-messages  ">Chatroom</a></li>
-                  <li><a href="newsfeed-images  ">Images</a></li>
-                  <li><a href="newsfeed-videos  ">Videos</a></li>
-                  <li><a href="timeline  ">Timeline</a></li>
-                  <li><a href="timeline-about  ">Timeline About</a></li>
-                  <li><a href="timeline-album  ">Timeline Album</a></li>
-                  <li><a href="timeline-friends  ">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic  ">Edit Profile</a></li>
-                  <li><a href="contact  ">Contact Us</a></li>
-                  <li><a href="faq  ">FAQ Page</a></li>
-                  <li><a href="404  ">404 Not Found</a></li>
+                  <li><a href="/newsfeed ">Newsfeed</a></li>
+                  <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                  <li><a href="/newsfeed-friends ">My friends</a></li>
+                  <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                  <li><a href="/newsfeed-images ">Images</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit Profile</a></li>
+                  <li><a href="/contact ">Contact Us</a></li>
+                  <li><a href="/faq ">FAQ Page</a></li>
                 </ul>
               </li>
-              <li class="dropdown"><a href="contact  ">Contact</a></li>
+              <li class="dropdown"><a href="/contact ">Contact</a></li>
+              <li class="dropdown"><a href="/logout ">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right hidden-sm">
               <div class="form-group">
@@ -107,7 +99,8 @@
                 <input type="text" class="form-control" placeholder="Search friends, photos, videos">
               </div>
             </form>
-          </div><!-- /.navbar-collapse -->
+          </div>
+          <!-- /.navbar-collapse -->
         </div><!-- /.container -->
       </nav>
     </header>
@@ -131,28 +124,14 @@
               <li><i class="icon ion-ios-people-outline"></i><div><a href="newsfeed-friends  ">Friends</a></div></li>
               <li><i class="icon ion-chatboxes"></i><div><a href="newsfeed-messages  ">Messages</a></div></li>
               <li><i class="icon ion-images"></i><div><a href="newsfeed-images  ">Images</a></div></li>
-              <li><i class="icon ion-ios-videocam"></i><div><a href="newsfeed-videos  ">Videos</a></div></li>
             </ul><!--news-feed links ends-->
-            <div id="chat-block">
-              <div class="title">Chat online</div>
-              <ul class="online-users list-inline">
-                <li><a href="newsfeed-messages  " title="Linda Lohan"><img src="{% static 'images/users/user-2.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Sophia Lee"><img src="{% static 'images/users/user-3.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="John Doe"><img src="{% static 'images/users/user-4.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Alexis Clark"><img src="{% static 'images/users/user-5.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="James Carter"><img src="{% static 'images/users/user-6.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Robert Cook"><img src="{% static 'images/users/user-7.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Richard Bell"><img src="{% static 'images/users/user-8.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Anna Young"><img src="{% static 'images/users/user-9.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="newsfeed-messages  " title="Julia Cox"><img src="{% static 'images/users/user-10.jpg' %}" alt="user" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-              </ul>
-            </div><!--chat block ends-->
+           
           </div>
     			<div class="col-md-7">
 
             <!-- Post Create Box
             ================================================= -->
-            <div class="create-post">
+            <!-- <div class="create-post">
             	<div class="row">
             		<div class="col-md-7 col-sm-7">
                   <div class="form-group">
@@ -172,8 +151,19 @@
                   </div>
                 </div>
             	</div>
-            </div><!-- Post Create Box End -->
+            </div>Post Create Box End -->
 
+            {% if messages %}
+                  {% for message in messages %}
+                  <!-- <script>alert("{{ message }}");</script> -->
+                  <div class="alert alert-success mt-5 show" style="z-index: 100;" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
             <!-- Nearby People List
             ================================================= -->
             <div class="people-nearby">
@@ -290,10 +280,11 @@
     </div>
     
     <!--Buy button-->
-    <a href="https://themeforest.net/cart/add_items?item_ids=18711273&amp;ref=thunder-team" target="_blank" class="btn btn-buy"><span class="italy">Buy with:</span><img src="{% static 'images/envato_logo.png' %}" alt="" /><span class="price">Only $20!</span></a>
+    
 
     <!-- Scripts
     ================================================= -->
+    <script>$().alert('close')</script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&amp;callback=initMap"></script>
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

@@ -29,10 +29,10 @@ def index_register(request):
         country = request.POST['country']
 
         if(User.objects.filter(username=username).exists()):
-            messages.info(request,'Username is not available')
+            messages.info(request,'Username is not available...')
             return HttpResponseRedirect('index-register')
         elif(User.objects.filter(email=email).exists()):
-            messages.info(request,'Email is already taken')
+            messages.info(request,'Email is already taken...')
             return HttpResponseRedirect('index-register')
         else:
             year = int(year)
@@ -60,7 +60,7 @@ def login(request) :
         print(user)
         request.session["username"] = username #sets the exp. value of the session 
         return HttpResponseRedirect('/')
-    messages.info(request, "User name Or Password is not Matched")
+    messages.info(request, "Username Or Password is not Matched")
     return HttpResponseRedirect('index-register')
 
 def password_reset(request):
@@ -93,7 +93,7 @@ def password_change(request) :
             messages.info(request, "token number is not valid")
             return HttpResponseRedirect('password-change')
         if ( password != confirm_password) :
-            messages.info(request, "Password and Confirm Password not matched it must be same")
+            messages.info(request, "Password and Confirm Password not matched.It must be same")
             return HttpResponseRedirect('password-change')
         user.set_password(password)
         user.save()

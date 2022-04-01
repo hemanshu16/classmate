@@ -165,9 +165,9 @@
               <!--Edit Profile Menu-->
               <ul class="edit-menu">
               	<li><i class="icon ion-ios-information-outline"></i><a href="/edit-profile-basic  ">Basic Information</a></li>
-              	<li class="active"><i class="icon ion-ios-briefcase-outline"></i><a href="/edit-profile-work-edu  ">Education and Work</a></li>
+              	<li><i class="icon ion-ios-briefcase-outline"></i><a href="/edit-profile-work-edu  ">Education and Work</a></li>
               	<li><i class="icon ion-ios-heart-outline"></i><a href="/edit-profile-interests   ">My Interests</a></li>
-                <li><i class="icon ion-ios-book-outline"></i><a href="/remember-list" >Remember List</a></li>
+                <li class="active"><i class="icon ion-ios-book-outline"></i><a href="/remember-list" >Remember List</a></li>
               	<li><i class="icon ion-ios-locked-outline"></i><a href="/edit-profile-password   ">Change Password</a></li>
               </ul>
             </div>
@@ -177,7 +177,7 @@
               ================================================= -->
               <div class="edit-profile-container">
                 <div class="block-title">
-                  <h4 class="grey"><i class="icon ion-ios-book-outline"></i>My education</h4>
+                  <h4 class="grey"><i class="icon ion-ios-book-outline"></i>Remember List</h4>
                   <div class="line"></div>
                   {% if messages %}
                   {% for message in messages %}
@@ -193,35 +193,37 @@
                   <div class="line"></div>
                 </div>
                 <div class="edit-block">
-                  <form name="education" id="education" class="form-inline" action="/update-education-details" method="POST">
+                  {% for remember in rememberList %}  
+                  <form name="education" id="{{remember.id}}" class="form-inline" action="/remember-list/" method="POST">
                     {%csrf_token%}
                     <div class="row">
                       <div class="form-group col-xs-12">
-                        <label for="school">My university</label>
-                        <input id="school" class="form-control input-group-lg" type="text" name="school" title="Enter School" placeholder="My School" value="{{profile.universityName}}" />
+                        <h2><img src="/media/pics/{{remember.friend}}.png"  onerror="this.src='/media/pics/{{remember.friend}}.jpg'" class="profile-photo-sm" />&nbsp;&nbsp;{{remember.friend}}</h2>
+                        <form  method="post"> {%csrf_token%}
+                          <input type="hidden" name="deleteremember" value="{{remember.id}}" >
+                          <button type="submit" style="background-color:rgb(208, 231, 250);border:none;">Delete</button>
+                          </form>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group col-xs-6">
-                        <label for="date-from">From</label>
-                        <input id="date-from" class="form-control input-group-lg" type="text" name="start" title="Enter a Date" placeholder="from" value="{{profile.startYear}}" />
-                      </div>
-                      <div class="form-group col-xs-6">
-                        <label for="date-to" class="">To</label>
-                        <input id="date-to" class="form-control input-group-lg" type="text" name="end" title="Enter a Date" placeholder="to" value="{{profile.endYear}}" />
-                      </div>
-                    </div>
+                    <input type="hidden" name="friend" value="{{remember.friend}}" >
                     <div class="row">
                       <div class="form-group col-xs-12">
-                        <label for="edu-description">Description</label>
-                        <textarea id="edu-description" name="description" class="form-control" placeholder="Some texts about my education" rows="4" cols="400">{{profile.educationDesc}}</textarea>
+                        <textarea id="edu-description{{remember.id}}" name="desc" class="form-control" placeholder="Your Memories" rows="4" cols="400">{{remember.desc}}</textarea>
                       </div>
                     </div>
                
-                    <button class="btn btn-primary" type="submit">Save Changes</button>
+                    <button class="btn btn-primary" name="updateRemember" id="{{remember.id}}" type="submit">Save Changes</button>
               
                     
                   </form>
+                  {% empty %}
+                <br>
+                <br>
+                <br>
+                <center>
+                <h3>No Memories . . .</h3>
+                </center>
+                  {% endfor %}
                 </div>
                 <!-- <div class="block-title">
                   <h4 class="grey"><i class="icon ion-ios-briefcase-outline"></i>Work Experiences</h4>

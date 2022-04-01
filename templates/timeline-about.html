@@ -49,57 +49,49 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="/index">Landing Page 1</a></li>
-                    <li><a href="/index-register">Landing Page 2</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/timeline ">Timeline</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Newsfeed <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="/newsfeed">Newsfeed</a></li>
-                    <li><a href="/newsfeed-people-nearby">Poeple Nearly</a></li>
-                    <li><a href="/newsfeed-friends">My friends</a></li>
-                    <li><a href="/newsfeed-messages">Chatroom</a></li>
-                    <li><a href="/newsfeed-images">Images</a></li>
-                    <li><a href="/newsfeed-videos">Videos</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                    <li><a href="/newsfeed-friends ">My friends</a></li>
+                    <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                    <li><a href="/newsfeed-images ">Images</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu login">
-                  <li><a href="/timeline">Timeline</a></li>
-                  <li><a href="/timeline-about">Timeline About</a></li>
-                  <li><a href="/timeline-album">Timeline Album</a></li>
-                  <li><a href="/timeline-friends">Timeline Friends</a></li>
-                  <li><a href="/edit-profile-basic">Edit: Basic Info</a></li>
-                  <li><a href="/edit-profile-work-edu">Edit: Work</a></li>
-                  <li><a href="/edit-profile-interests">Edit: Interests</a></li>
-                  <li><a href="/edit-profile-settings">Account Settings</a></li>
-                  <li><a href="/edit-profile-password">Change Password</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit: Basic Info</a></li>
+                  <li><a href="/edit-profile-work-edu ">Edit: Work</a></li>
+                  <li><a href="/edit-profile-interests ">Edit: Interests</a></li>
+                  <li><a href="/edit-profile-settings ">Account Settings</a></li>
+                  <li><a href="/edit-profile-password ">Change Password</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle pages" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Pages <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu page-list">
-                  <li><a href="/index">Landing Page 1</a></li>
-                  <li><a href="/index-register">Landing Page 2</a></li>
-                  <li><a href="/newsfeed">Newsfeed</a></li>
-                  <li><a href="/newsfeed-people-nearby">Poeple Nearly</a></li>
-                  <li><a href="/newsfeed-friends">My friends</a></li>
-                  <li><a href="/newsfeed-messages">Chatroom</a></li>
-                  <li><a href="/newsfeed-images">Images</a></li>
-                  <li><a href="/newsfeed-videos">Videos</a></li>
-                  <li><a href="/timeline">Timeline</a></li>
-                  <li><a href="/timeline-about">Timeline About</a></li>
-                  <li><a href="/timeline-album">Timeline Album</a></li>
-                  <li><a href="/timeline-friends">Timeline Friends</a></li>
-                  <li><a href="/edit-profile-basic">Edit Profile</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                  <li><a href="/faq">FAQ Page</a></li>
-                  <li><a href="/404">404 Not Found</a></li>
+                  <li><a href="/newsfeed ">Newsfeed</a></li>
+                  <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                  <li><a href="/newsfeed-friends ">My friends</a></li>
+                  <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                  <li><a href="/newsfeed-images ">Images</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit Profile</a></li>
+                  <li><a href="/contact ">Contact Us</a></li>
+                  <li><a href="/faq ">FAQ Page</a></li>
                 </ul>
               </li>
-              <li class="dropdown"><a href="contact   ">Contact</a></li>
+              <li class="dropdown"><a href="/contact ">Contact</a></li>
+              <li class="dropdown"><a href="/logout ">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right hidden-sm">
               <div class="form-group">
@@ -134,12 +126,12 @@
                 <ul class="list-inline profile-menu">
                   <li><a href="/timeline   ">Timeline</a></li>
                   <li><a href="/timeline-about   " class="active">About</a></li>
-                  <li><a href="/timeline-album   ">Album</a></li>
-                  <li><a href="/timeline-friends   ">Friends</a></li>
                 </ul>
                 <ul class="follow-me list-inline">
-                  <li>1,299 people following her</li>
-                  <li><button class="btn-primary">Add Friend</button></li>
+                  <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>
+                  {% if flag == 0 %}
+                  <li><a href="/add-friend/{{profile.user.username}}"><button class="btn-primary">Add Friend</button></a></li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
@@ -156,10 +148,13 @@
               <ul class="list-inline">
                 <li><a href="/timline   ">Timeline</a></li>
                 <li><a href="/timeline-about   " class="active">About</a></li>
-                <li><a href="/timeline-album   ">Album</a></li>
-                <li><a href="/timeline-friends   ">Friends</a></li>
               </ul>
-              <button class="btn-primary">Add Friend</button>
+              <ul class="follow-me list-inline">
+                <li>&nbsp; {{profile.friendlist|length}} &nbsp; people are your friends</li>
+                {% if flag == 0 %}
+                <li><a href="/add-friend/{{profile.user.username}}"><button class="btn-primary">Add Friend</button></a></li>
+                {% endif %}
+              </ul>
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -167,8 +162,18 @@
         <div id="page-contents">
           <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-7">
-
+            <div class="col-md-4">
+              {% if messages %}
+              {% for message in messages %}
+              <!-- <script>alert("{{ message }}");</script> -->
+              <div class="alert alert-success mt-5 show" style="z-index: 100;" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endfor %}
+              {% endif %}
               <!-- About
               ================================================= -->
               <div class="about-profile">
@@ -179,10 +184,8 @@
                
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-location-outline icon-in-title"></i>Location</h4>
-                  <p>{{profile.city}},{{profile.country}}</p>
-                  <div class="google-maps">
-                    <div id="map" class="map"></div>
-                  </div>
+                  <p>{{profile.city}},&nbsp;&nbsp;{{profile.country}}</p>
+                  
                 </div>
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-heart-outline icon-in-title"></i>Interests</h4>
@@ -197,44 +200,37 @@
                     border-radius: 40px;">{{interest}}</li>
                     {% endfor %}
                   </ul>
+                  <p>{{profile.interestDesc}}</p>
                 </div>
                 <div class="about-content-block">
-                  <h4 class="grey"><i class="ion-ios-chatbubble-outline icon-in-title"></i>Language</h4>
+                  <h4 class="grey"><i class="ion-ios-book-outline icon-in-title"></i>University</h4>
                     <ul>
-                      <li><a href="#">Russian</a></li>
-                      <li><a href="#">English</a></li>
+                      <li><a href="#">{{profile.universityName}}</a></li>
+                      <li><a href="#">{{profile.startYear}}&nbsp;-&nbsp;{{profile.endYear}}</a></li>
                     </ul>
+                    <p>{{profile.educationDesc}}</p>
                 </div>
               </div>
+              
             </div>
-            <div class="col-md-2 static">
-              <div id="sticky-sidebar">
-                <h4 class="grey">Sarah's activity</h4>
-                <div class="feed-item">
-                  <div class="live-activity">
-                    <p><a href="#" class="profile-link">Sarah</a> Commended on a Photo</p>
-                    <p class="text-muted">5 mins ago</p>
-                  </div>
-                </div>
-                <div class="feed-item">
-                  <div class="live-activity">
-                    <p><a href="#" class="profile-link">Sarah</a> Has posted a photo</p>
-                    <p class="text-muted">an hour ago</p>
-                  </div>
-                </div>
-                <div class="feed-item">
-                  <div class="live-activity">
-                    <p><a href="#" class="profile-link">Sarah</a> Liked her friend's post</p>
-                    <p class="text-muted">4 hours ago</p>
-                  </div>
-                </div>
-                <div class="feed-item">
-                  <div class="live-activity">
-                    <p><a href="#" class="profile-link">Sarah</a> has shared an album</p>
-                    <p class="text-muted">a day ago</p>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-1" style="border-left: 2px solid rgb(13, 14, 13);height: 500px;"></div>
+            <div class="col-md-4 ">
+              <div class="about-profile">
+                <h3>Remember List</h3>
+             {% for remember in rememberList %}
+             <div class="about-content-block">
+              <h4 class="grey"><img src="/media/pics/{{remember.friend}}.png"  onerror="this.src='/media/pics/{{remember.friend}}.jpg'" class="profile-photo-sm" />&nbsp;&nbsp;{{remember.friend}}</h4>
+                <p>{{remember.desc}}</p>
+                {% empty %}
+                <br>
+                <br>
+                <br>
+                <center>
+                <h3>No Memories . . .</h3>
+                </center>
+            </div>
+             {% endfor %}
+             </div>
             </div>
           </div>
         </div>
@@ -315,6 +311,7 @@
    
     <!-- Scripts
     ================================================= -->
+    <script>$().alert('close')</script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&amp;callback=initMap"></script>
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

@@ -50,57 +50,49 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="index">Landing Page 1</a></li>
-                    <li><a href="index-register">Landing Page 2</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/timeline ">Timeline</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Newsfeed <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                   <ul class="dropdown-menu newsfeed-home">
-                    <li><a href="newsfeed">Newsfeed</a></li>
-                    <li><a href="newsfeed-people-nearby">Poeple Nearly</a></li>
-                    <li><a href="newsfeed-friends">My friends</a></li>
-                    <li><a href="newsfeed-messages">Chatroom</a></li>
-                    <li><a href="newsfeed-images">Images</a></li>
-                    <li><a href="newsfeed-videos">Videos</a></li>
+                    <li><a href="/newsfeed ">Newsfeed</a></li>
+                    <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                    <li><a href="/newsfeed-friends ">My friends</a></li>
+                    <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                    <li><a href="/newsfeed-images ">Images</a></li>
                   </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu login">
-                  <li><a href="timeline   ">Timeline</a></li>
-                  <li><a href="timeline-about">Timeline About</a></li>
-                  <li><a href="timeline-album">Timeline Album</a></li>
-                  <li><a href="timeline-friends">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic">Edit: Basic Info</a></li>
-                  <li><a href="edit-profile-work-edu">Edit: Work</a></li>
-                  <li><a href="edit-profile-interests">Edit: Interests</a></li>
-                  <li><a href="edit-profile-settings">Account Settings</a></li>
-                  <li><a href="edit-profile-password">Change Password</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit: Basic Info</a></li>
+                  <li><a href="/edit-profile-work-edu ">Edit: Work</a></li>
+                  <li><a href="/edit-profile-interests ">Edit: Interests</a></li>
+                  <li><a href="/edit-profile-settings ">Account Settings</a></li>
+                  <li><a href="/edit-profile-password ">Change Password</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle pages" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Pages <span><img src="{% static 'images/down-arrow.png' %}" alt="" /></span></a>
                 <ul class="dropdown-menu page-list">
-                  <li><a href="index">Landing Page 1</a></li>
-                  <li><a href="index-register">Landing Page 2</a></li>
-                  <li><a href="newsfeed">Newsfeed</a></li>
-                  <li><a href="newsfeed-people-nearby">Poeple Nearly</a></li>
-                  <li><a href="newsfeed-friends">My friends</a></li>
-                  <li><a href="newsfeed-messages">Chatroom</a></li>
-                  <li><a href="newsfeed-images">Images</a></li>
-                  <li><a href="newsfeed-videos">Videos</a></li>
-                  <li><a href="timeline">Timeline</a></li>
-                  <li><a href="timeline-about">Timeline About</a></li>
-                  <li><a href="timeline-album">Timeline Album</a></li>
-                  <li><a href="timeline-friends">Timeline Friends</a></li>
-                  <li><a href="edit-profile-basic">Edit Profile</a></li>
-                  <li><a href="contact">Contact Us</a></li>
-                  <li><a href="faq">FAQ Page</a></li>
-                  <li><a href="404">404 Not Found</a></li>
+                  <li><a href="/newsfeed ">Newsfeed</a></li>
+                  <li><a href="/newsfeed-people-nearby ">Poeple Nearly</a></li>
+                  <li><a href="/newsfeed-friends ">My friends</a></li>
+                  <li><a href="/newsfeed-messages ">Chatroom</a></li>
+                  <li><a href="/newsfeed-images ">Images</a></li>
+                  <li><a href="/timeline ">Timeline</a></li>
+                  <li><a href="/timeline-about ">Timeline About</a></li>
+                  <li><a href="/edit-profile-basic ">Edit Profile</a></li>
+                  <li><a href="/contact ">Contact Us</a></li>
+                  <li><a href="/faq ">FAQ Page</a></li>
                 </ul>
               </li>
-              <li class="dropdown"><a href="contact   ">Contact</a></li>
+              <li class="dropdown"><a href="/contact ">Contact</a></li>
+              <li class="dropdown"><a href="/logout ">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right hidden-sm">
               <div class="form-group">
@@ -114,9 +106,27 @@
     </header>
     <!--Header End-->
 
-    <div class="google-maps">
-      <div id="map" class="map contact-map"></div>
+    <!-- <div class="google-maps">
+      <div id="map" class="map contact-map" rel="shortcut icon" type="image/png" href="{% static 'images/fav.png' %}"/>
+    </div> -->
+
+    <div class="page-title-section faq">
+      <div class="container">
+        <div class="headline">
+          <h1 class="title">Leave a message</h1>
+        </div>
+        <div class="page-search">
+          <form class="search-form">
+            <div class="form-group">
+              <label for="search_content" class="screen-reader-text">Search Content!</label>
+              
+            </div>
+            <button type="submit" class="btn btn-primary" value=""><i class="icon ion-ios-search-strong"></i></button>
+          </form>
+        </div>
+      </div>
     </div>
+
     <div id="page-contents">
     	<div class="container">
     		<div class="row">
@@ -233,8 +243,6 @@
       <div class="spinner"></div>
     </div>
     
-    <!--Buy button-->
-    <a href="https://themeforest.net/cart/add_items?item_ids=18711273&amp;ref=thunder-team" target="_blank" class="btn btn-buy"><span class="italy">Buy with:</span><img src="images/envato_logo.png" alt="" /><span class="price">Only $20!</span></a>
     
     <!-- Scripts
     ================================================= -->

@@ -7,8 +7,10 @@ import os
 from friends.models import Profile
 from friends.models import Post
 from friends.models import Comment
+from friends.models import RememberList
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 import datetime
 # Create your views here.
 
@@ -57,6 +59,7 @@ def edit_profile_basic(request):
                profile.image = request.FILES["profileimg"] 
             user.save()   
             profile.save()
+            messages.info(request,"Successfully Updated . . .")
         user1 = User.objects.get(username=request.session["username"])
         profile1 = Profile.objects.get(user_id=user1.id)
         return render(request, "edit-profile-basic.html",{'user':user1,'profile':profile1})
@@ -89,7 +92,7 @@ def update_interest(request) :
            List1 = [request.POST['interest']]
            profile.interestList = List1
         profile.save()
-        
+        messages.info(request,"Successfully Updated...")
         return HttpResponseRedirect('/edit-profile-interests')
     else :
         messages.info(request, "First You have to Login")
@@ -113,6 +116,7 @@ def update_education_details(request) :
     profile.endYear = int(request.POST["end"])
     profile.educationDesc = request.POST["description"]
     profile.save()
+    messages.info(request,"Successfully Updated. . .")
     return HttpResponseRedirect('/edit-profile-work-edu')
 
   
@@ -144,6 +148,26 @@ def edit_profile_settings(request):
 def contact(request):
     return render(request, 'contact.html')
 
+def remember_list(request):
+
+    if "updateRemember" in request.POST:
+        username = request.session["username"]
+        friend = request.POST["friend"]
+        memory = RememberList.objects.get(username = username,friend = friend)
+        memory.username = username
+        memory.friend = friend
+        memory.desc = request.POST["desc"]
+        memory.save()
+        messages.info(request,"Successfully Updated...")
+
+    if "deleteremember" in request.POST :
+        RememberList.objects.filter(id=int(request.POST['deleteremember'])).delete()
+        messages.info(request,"Successfully Deleted...")    
+    remember = RememberList.objects.filter(username = request.session["username"])
+    user = User.objects.get(username=request.session["username"])
+    profile = Profile.objects.get(user_id=user.id)
+    return render(request, 'remember-list.html', {'rememberList':remember,'user':user,'profile':profile})    
+
 def not_found(request):
     return render(request, '404.html')
 
@@ -160,6 +184,7 @@ def newsfeed(request) :
             if "submitpost" in request.POST:
                post = Post(username=request.session["username"],image=request.FILES["postImg"],desc=request.POST["desc"],likes=0,dislikes=0,postdate=datetime.date.today())
                post.save()
+               messages.info(request,"Congrats. . . for a new Post")
 
             if "submitlike" in request.POST:
                print(request.POST["postid"])
@@ -212,14 +237,16 @@ def newsfeed(request) :
             if "submitcomment" in request.POST:
                 comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
                 comment.save()
+                messages.info(request,"Comment Saved. . .")
 
          
             if "deletecomment" in request.POST :
                 Comment.objects.filter(id=int(request.POST['commentid'])).delete()
+                messages.info(request,"Comment Deleted")
             
         post = Post.objects.filter().order_by('-id')
         comment = Comment.objects.all()
-        otheruser = Profile.objects.all()
+        otheruser = Profile.objects.filter(universityName=profile.universityName)
         return render(request, 'newsfeed.html', {'profile':profile,'otherusers':otheruser,'posts':post,'comments':comment})
     else :
         messages.info(request, "First You have to Login")
@@ -238,17 +265,18 @@ def newsfeed_friends(request) :
                     user = User.objects.get(username = friend)
                     profile = Profile.objects.get(user_id = user.id)
                     friendlist.append(profile)
-        otheruser = Profile.objects.all()
         user = User.objects.get(username = request.session["username"])
         profile = Profile.objects.get(user_id = user.id)
+        otheruser = Profile.objects.filter(universityName=profile.universityName)
         return render(request,'newsfeed-friends.html', {'profile': friendlist, 'users':otheruser,'myuser':profile })
     messages.info(request, 'First you need to loging for view my-profile')
     return HttpResponseRedirect('/index-register' )    
 
 def timeline_about(request,username = None) :
-    
+    flag = 0
     if username is  None :
         if 'username' in request.session : 
+            flag = 1
             username = request.session['username']
         else :
             messages.info(request, 'First you need to loging for view my-profile')
@@ -256,13 +284,16 @@ def timeline_about(request,username = None) :
     if(User.objects.filter(username = username).exists()):
        user = User.objects.get(username = username)
        profile = Profile.objects.get(user_id = user.id)
-       return render(request, "timeline-about.html", {'profile' : profile})
+       remember = RememberList.objects.filter(username = request.session["username"])
+       return render(request, "timeline-about.html", {'profile' : profile,'flag':flag,'rememberList':remember})
     return render(request,"404.html")
+ 
 
 def timeline(request,username = None) :
-    
+    flag = 0
     if username is  None :
         if 'username' in request.session : 
+            flag = 1
             username = request.session['username']
         else :
             messages.info(request, 'First you need to loging for view my-profile')
@@ -270,10 +301,30 @@ def timeline(request,username = None) :
     if(User.objects.filter(username = username).exists()):
        user = User.objects.get(username = username)
        profile = Profile.objects.get(user_id = user.id)
+
+       if "submitRemember" in request.POST:
+           
+           try:
+              remember = RememberList.objects.get(username=request.session["username"],friend=username)
+           except RememberList.DoesNotExist:
+              remember = None
+
+           if remember is None:
+               memory = RememberList(username=request.session["username"],friend=username,desc=request.POST["desc"])
+               memory.save()
+               messages.info(request,"Successfully Saved. . .")
+           else:
+               remember.username = request.session["username"]
+               remember.friend = username
+               remember.desc = request.POST["desc"]
+               remember.save()
+               messages.info(request,"Successfully Updated. . .")
+
        
        if "submitpost" in request.POST:
                post = Post(username=request.session["username"],image=request.FILES["postImg"],desc=request.POST["desc"],likes=0,dislikes=0,postdate=datetime.date.today())
                post.save()
+               messages.info(request,"Successfully Saved. . .")
 
        if request.method == "POST":
            if "submitlike" in request.POST:
@@ -326,18 +377,99 @@ def timeline(request,username = None) :
                 if len(request.POST["comment"].strip()) > 0 :
                     comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
                     comment.save()
+                    messages.info(request,"Successfully Saved. . .")
 
            if "deletepost" in request.POST :
                Post.objects.filter(id=int(request.POST['deletepost'])).delete()
+               messages.info(request,"Successfully Deleted. . .")
+
+           if "deletecomment" in request.POST :
+                Comment.objects.filter(id=int(request.POST['commentid'])).delete()
+                messages.info(request,"Successfully Deleted. . .")   
 
        post = Post.objects.filter(username=username)
-       
        comments = Comment.objects.filter()
-       return render(request, "timeline.html", {'profile' : profile,'posts':post,'comments':comments})
+       user = User.objects.get(username=request.session["username"])
+       loggedUser = Profile.objects.get(user_id=user.id)
+       return render(request, "timeline.html", {'profile' : profile,'loggedUser':loggedUser ,'posts':post,'comments':comments,'flag':flag})
     return render(request,"404.html")
 
 def newsfeed_images(request) :
-    return render(request,'newsfeed-images.html')
+     if 'username' in request.session :
+        user = User.objects.get(username=request.session["username"])
+        profile = Profile.objects.get(user_id=user.id)
+
+        if request.method == "POST":
+
+            if "submitpost" in request.POST:
+               post = Post(username=request.session["username"],image=request.FILES["postImg"],desc=request.POST["desc"],likes=0,dislikes=0,postdate=datetime.date.today())
+               post.save()
+               messages.info(request,"Successfully Saved. . .")
+
+            if "submitlike" in request.POST:
+               print(request.POST["postid"])
+               post_for_like = Post.objects.get(id=int(request.POST["postid"]))
+               print(post_for_like.likedby)
+               if post_for_like.likedby is None:
+                    post_for_like.likes = post_for_like.likes + 1
+                    List1 = [request.session['username']]
+                    post_for_like.likedby = List1
+
+                    if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])
+                    post_for_like.save()
+               elif request.session['username'] not in post_for_like.likedby:
+                   post_for_like.likes = post_for_like.likes + 1
+                   if post_for_like.likedby is not None :
+                      post_for_like.likedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_like.likedby = List1
+                   if post_for_like.dislikedby is not None and request.session['username'] in post_for_like.dislikedby :
+                        post_for_like.dislikes = post_for_like.dislikes - 1
+                        post_for_like.dislikedby.remove(request.session['username'])   
+                   post_for_like.save()   
+
+            if "submitdislike" in request.POST:
+               post_for_dislike = Post.objects.get(id= int(request.POST["postid"]))
+               if post_for_dislike.dislikedby is None:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   List1 = [request.session['username']]
+                   post_for_dislike.dislikedby = List1
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
+                   post_for_dislike.save()
+               elif request.session['username'] not in post_for_dislike.dislikedby:
+                   post_for_dislike.dislikes = post_for_dislike.dislikes + 1
+                   if post_for_dislike.dislikedby is not None :
+                      post_for_dislike.dislikedby.append(request.session['username'])
+                   else : 
+                      List1 = [request.session['username']]
+                      post_for_dislike.dislikedby = List1
+                   if post_for_dislike.likedby is not None and request.session['username'] in post_for_dislike.likedby :
+                        post_for_dislike.likes = post_for_dislike.likes - 1
+                        post_for_dislike.likedby.remove(request.session['username'])
+                   post_for_dislike.save()
+                  
+
+            if "submitcomment" in request.POST:
+                comment = Comment(post_id=int(request.POST["postid"]),comment=request.POST["comment"],username=request.session["username"])
+                comment.save()
+                messages.info(request,"Successfully Saved. . .")
+         
+            if "deletecomment" in request.POST :
+                Comment.objects.filter(id=int(request.POST['commentid'])).delete()
+                messages.info(request,"Successfully Delete. . .")
+            
+        post = Post.objects.filter().order_by('-likes').order_by('dislikes')
+        comment = Comment.objects.all()
+        otheruser = Profile.objects.filter(universityName=profile.universityName)
+        return render(request, 'newsfeed-images.html', {'profile':profile,'otherusers':otheruser,'posts':post,'comments':comment})
+     else :
+        messages.info(request, "First You have to Login")
+        return HttpResponseRedirect('/index-register' )
 
 def newsfeed_messages(request) :
     if 'username' in request.session :
@@ -351,9 +483,10 @@ def newsfeed_messages(request) :
                     user = User.objects.get(username = friend)
                     profile = Profile.objects.get(user_id = user.id)
                     friendlist.append(profile)
-        otheruser = Profile.objects.all()
+        
         user = User.objects.get(username = request.session["username"])
         profile = Profile.objects.get(user_id = user.id)
+        otheruser = Profile.objects.filter(universityName=profile.universityName)
         return render(request,'newsfeed-messages.html', {'profile': friendlist, 'users':otheruser,'myuser':profile })
     messages.info(request, 'First you need to loging for view my-profile')
     return HttpResponseRedirect('/index-register' )
@@ -362,7 +495,7 @@ def newsfeed_people_nearby(request) :
      if 'username' in request.session :
         user = User.objects.get(username=request.session["username"])
         profile = Profile.objects.get(user_id=user.id)
-        otheruser = Profile.objects.all()
+        otheruser = Profile.objects.filter(universityName=profile.universityName)
         return render(request, 'newsfeed-people-nearby.html', {'profile':profile,'otherusers':otheruser})
      else :
         messages.info(request, "First You have to Login")
@@ -383,6 +516,7 @@ def add_friend(request,friend) :
            List1 = [friend]
            profile.friendlist = List1
         profile.save()
+        messages.info(request,"Successfully Saved. . .")
         return HttpResponseRedirect('/newsfeed-friends' )
     messages.info(request, 'First you need to loging for view my-profile')
     return HttpResponseRedirect('/index-register' )

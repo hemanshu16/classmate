@@ -58,3 +58,8 @@ class Comment(models.Model):
     username = models.TextField(null = True)
     comment = models.TextField(null = True)
     post_id = models.BigIntegerField(null = True)
+
+class RememberList(models.Model):
+    username = models.TextField(null = True)
+    friend = models.TextField(null = True)
+    desc = models.TextField(null = True)
