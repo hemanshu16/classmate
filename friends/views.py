@@ -55,7 +55,8 @@ def edit_profile_basic(request):
             profile.country = country
             profile.aboutMe = information
             profile.gender = gender
-
+            if request.FILES["banner-image"] is not None :
+                profile.banner_image = request.FILES["banner-image"]
             if 'profileimg' in request.FILES:
                if(os.path.exists(os.path.join('C:/Users/Visha/Documents/GitHub/ClassMate/media/',str(profile.image.name)))) :
                   os.remove(os.path.join('C:/Users/Visha/Documents/GitHub/ClassMate/media/',str(profile.image.name))) 
@@ -250,6 +251,16 @@ def newsfeed(request) :
         post = Post.objects.filter().order_by('-id')
         comment = Comment.objects.all()
         otheruser = Profile.objects.filter(universityName=profile.universityName)
+        otheruser = otheruser.exclude(id = profile.id)
+        friendlist = []
+        friends = profile.friendlist 
+        if friends is not None :
+            for friend in friends :
+                if friend is not None :
+                    user = User.objects.get(username = friend)
+                    friendlist.append(user)
+        for user in friendlist :
+            otheruser = otheruser.exclude(user_id = user.id)
         return render(request, 'newsfeed.html', {'profile':profile,'otherusers':otheruser,'posts':post,'comments':comment})
     else :
         messages.info(request, "First You have to Login")

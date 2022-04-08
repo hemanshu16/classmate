@@ -113,7 +113,7 @@
       <!-- Timeline
       ================================================= -->
       <div class="timeline">
-        <div class="timeline-cover" style="background:url({% if profile.image %} {{profile.image.url}} {% endif %}) ;"  for="banner" >
+        <div class="timeline-cover" style="background:url({% if profile.banner_image %} {{profile.banner_image.url}} {% endif %}) ;background-size:cover; background-position:center; background-repeat:no-repeat; "  for="banner" >
   
           <input type="file" name="banner-image"  style="visibility:hidden; display: none;"> 
          

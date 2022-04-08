@@ -115,9 +115,9 @@
       ================================================= -->
     <div class="timeline" >
      
-      <div class="timeline-cover" style="background:url({% if profile.image %} {{profile.image.url}} {% endif %}) ;"  for="banner" >
+      <div class="timeline-cover" style="background:url({% if profile.banner_image %} {{profile.banner_image.url}} {% endif %}) ;background-size:cover; background-position:center; background-repeat:no-repeat; "  for="banner" >
   
-       <input type="file" name="banner-image"  style="visibility:hidden; display: none;"> 
+      
       
         <div class="timeline-nav-bar hidden-sm hidden-xs">
           <div class="row">
@@ -164,7 +164,7 @@
         <!--Timeline Menu for Small Screens End-->
 
       </div> 
-      
+       
       <div id="page-contents">
         <div class="row">
           <div class="col-md-3">
@@ -188,7 +188,13 @@
             <div class="edit-profile-container">
               <div class="block-title">
                 <h4 class="grey"><i class="icon ion-android-checkmark-circle"></i>Edit basic information</h4>
-                <div class="line"></div>
+                <div class="line">   
+                </div>
+                <label for="banner-image">change Banner Image</label>
+                <input type="file" id="banner-image" name="banner-image" style="visibility:hidden ; display: none;"  > 
+                <div class="line">
+                  
+                </div>
                 {% if messages %}
                   {% for message in messages %}
                   <!-- <script>alert("{{ message }}");</script> -->

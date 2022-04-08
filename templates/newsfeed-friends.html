@@ -138,7 +138,7 @@
                  {% for user in profile %}
             		<div class="col-md-6 col-sm-6">
                   <div class="friend-card">
-                  	<img src="{% static 'images/covers/1.jpg' %}" alt="profile-cover" class="img-responsive cover" />
+                    <img src="{% if user.banner_image %} {{user.banner_image.url}} {% endif %}" alt="profile-cover" class="img-responsive cover" />
                   	<div class="card-info">
                       <img src="{% if user.image %} {{user.image.url}} {% endif %}" alt="user" class="profile-photo-lg" />
                       <div class="friend-info">
@@ -156,7 +156,7 @@
 
     			<!-- Newsfeed Common Side Bar Right
           ================================================= -->
-    			<div class="col-md-2 static">
+    			<!-- <div class="col-md-2 static">
             <div class="suggestions" id="sticky-sidebar">
               <h4 class="grey">Who to Follow</h4>
               {% for user in users %}
@@ -168,6 +168,7 @@
                 </div>
               </div>
               {% endfor %}
+            </div> -->
             </div>
           </div>
     		</div>
