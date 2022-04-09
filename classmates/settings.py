@@ -90,10 +90,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ClassMate',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost'
+        'NAME': 'd4njakh1lp29md',
+        'USER': 'uvallwitadrmyw',
+        'PASSWORD': 'f81b8cbb5ad0c7a86fcdc352e45386b86e249c73408b38679899dea4eff4c0db',
+        'HOST': 'ec2-54-157-79-121.compute-1.amazonaws.com'
     }
 }
 
